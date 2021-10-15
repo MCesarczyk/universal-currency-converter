@@ -5,6 +5,7 @@ export const ContentWrapper = styled.label.attrs(props => ({
     direction: props.vertical ? "column" : "row",
 }))`
     display: flex;
+    justify-content: space-between;
     flex-direction: ${props => props.direction};
     gap: 10px;
     align-items: center;

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Fieldset = styled.fieldset`
     border-radius: 20px;
-    padding: 10px;
+    padding: 12px 24px;
     margin-bottom: 10px;
 `;
 
@@ -15,8 +15,9 @@ export const Legend = styled.legend`
     text-align: center;
 `;
 
-export const InputLabelText = styled.span`
-    min-width: 100px;
+export const LabelText = styled.span`
+    display: block;
+    min-width: 150px;
 `;
 
 export const FormInput = styled.input`
@@ -34,28 +35,6 @@ export const FormSelect = styled.select`
     width: 80%;
     border-radius: 5px;
     height: 24px;
-`;
-
-export const List = styled.ul`
-    list-style: none;
-    line-height: 1.75;
-    padding-left: 0;
-`;
-
-export const ListItem = styled.li`
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-`;
-
-export const ListLabel = styled.label`
-    width: 150px;
-    display: inline-block;
-    margin: 0 5px;
-`;
-
-export const FormResult = styled.p`
-    margin-left: 20px;
 `;
 
 export const FormAnnotation = styled.p`

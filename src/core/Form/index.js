@@ -7,7 +7,7 @@ import { ContentWrapper } from "../../common/ContentWrapper";
 import {
   Fieldset,
   Legend,
-  InputLabelText,
+  LabelText,
   FormInput,
   FormSelect,
   FormResult,
@@ -86,9 +86,9 @@ const Form = ({
           language={language}
         />
         <ContentWrapper>
-          <InputLabelText>
+          <LabelText>
             {inputLabel}
-          </InputLabelText>
+          </LabelText>
           <FormInput
             ref={inputRef}
             value={newAmount}
@@ -106,19 +106,19 @@ const Form = ({
         <Legend>{listTitle}</Legend>
         <ContentWrapper vertical>
           {status === "loading" ? (
-            <div>
+            <LabelText>
               {languages[language].loadingMessage}
-            </div>
+            </LabelText>
           ) : (status === "error" ? (
-            <div>
+            <LabelText>
               {languages[language].errorMessage}
-            </div>
+            </LabelText>
           ) : (
             <>
               <ContentWrapper>
-                <div>
+                <LabelText>
                   Changed&nbsp;currency:
-                </div>
+                </LabelText>
                 <FormSelect>
                   {Object.keys(filteredRates).map((key, value) => (
                     <option key={key} value={key}>
@@ -132,9 +132,9 @@ const Form = ({
                 </FormSelect>
               </ContentWrapper>
               <ContentWrapper>
-                <div>
+                <LabelText>
                   Wanted&nbsp;currency:
-                </div>
+                </LabelText>
                 <FormSelect onChange={onCurrencyChange}>
                   {Object.keys(filteredRates).map((key, value) => (
                     <option key={key} value={key}>
@@ -153,10 +153,14 @@ const Form = ({
       </Fieldset>
       <Fieldset>
         <Legend>{resultTitle}</Legend>
-        <FormResult>
-          {resultLabel}
-          {result}
-        </FormResult>
+        <ContentWrapper>
+          <LabelText>
+            {resultLabel}
+          </LabelText>
+          <div>
+            {result}
+          </div>
+        </ContentWrapper>
         <FormAnnotation>
           {checkingDate}
         </FormAnnotation>
