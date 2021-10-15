@@ -116,25 +116,17 @@ const Form = ({
             {languages[language].errorMessage}
           </div>
         ) : (
-          <List>
-            {Object.keys(filteredRates).map((key, value) => (
-              <ListItem key={key} >
-                <input
-                  type="radio"
-                  name="chosenCurrency"
-                  id={key}
-                  value={key}
-                  checked={chosenCurrency === key}
-                  onChange={onCurrencyChange}
-                />
-                <ListLabel htmlFor={key}>
-                  {currencies[currencies.findIndex(({ id }) => id === key)].label[language]}
-                </ListLabel>
-                {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
-              </ListItem>
-            ))
-            }
-          </List>
+          <select onChange={onCurrencyChange}>
+          {Object.keys(filteredRates).map((key, value) => (
+            <option value={key}>
+              {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
+              {" - "}
+              {key}
+              {" - "}
+              {currencies[currencies.findIndex(({ id }) => id === key)].label[language]}
+            </option>
+          ))}
+        </select>
         ))}
       </Fieldset>
       <Fieldset>
