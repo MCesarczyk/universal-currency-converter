@@ -10,9 +10,7 @@ import {
   InputLabel,
   InputLabelText,
   FormInput,
-  List,
-  ListItem,
-  ListLabel,
+  FormSelect,
   FormResult,
   FormAnnotation
 } from "./styled";
@@ -84,7 +82,7 @@ const Form = ({
     <form onSubmit={onFormSubmit} onReset={onFormReset}>
       <Fieldset>
         <Legend>{headerTitle}</Legend>
-        <Clock 
+        <Clock
           languages={languages}
           language={language}
         />
@@ -107,27 +105,29 @@ const Form = ({
       </Fieldset>
       <Fieldset>
         <Legend>{listTitle}</Legend>
-        {status === "loading" ? (
-          <div>
-            {languages[language].loadingMessage}
-          </div>
-        ) : (status === "error" ? (
-          <div>
-            {languages[language].errorMessage}
-          </div>
-        ) : (
-          <select onChange={onCurrencyChange}>
-          {Object.keys(filteredRates).map((key, value) => (
-            <option value={key}>
-              {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
-              {" - "}
-              {key}
-              {" - "}
-              {currencies[currencies.findIndex(({ id }) => id === key)].label[language]}
-            </option>
+        <InputLabel>
+          {status === "loading" ? (
+            <div>
+              {languages[language].loadingMessage}
+            </div>
+          ) : (status === "error" ? (
+            <div>
+              {languages[language].errorMessage}
+            </div>
+          ) : (
+            <FormSelect onChange={onCurrencyChange}>
+              {Object.keys(filteredRates).map((key, value) => (
+                <option key={key} value={key}>
+                  {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
+                  {" - "}
+                  {key}
+                  {" - "}
+                  {currencies[currencies.findIndex(({ id }) => id === key)].label[language]}
+                </option>
+              ))}
+            </FormSelect>
           ))}
-        </select>
-        ))}
+        </InputLabel>
       </Fieldset>
       <Fieldset>
         <Legend>{resultTitle}</Legend>
@@ -138,7 +138,7 @@ const Form = ({
         <FormAnnotation>
           {checkingDate}
         </FormAnnotation>
-        <Buttons 
+        <Buttons
           languages={languages}
           language={language}
         />

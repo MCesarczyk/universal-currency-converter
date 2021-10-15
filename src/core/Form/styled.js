@@ -41,6 +41,12 @@ export const FormInput = styled.input`
     }
 `;
 
+export const FormSelect = styled.select`
+    width: 80%;
+    border-radius: 5px;
+    height: 24px;
+`;
+
 export const List = styled.ul`
     list-style: none;
     line-height: 1.75;
