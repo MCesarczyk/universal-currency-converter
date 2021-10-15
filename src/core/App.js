@@ -4,8 +4,7 @@ import Switcher from "./Switcher";
 import languages from "./languages";
 import { useLocalStorageState } from "./useLocalStorageState";
 
-function App() {
-
+const App = () => {
   const [language, setLanguage] = useLocalStorageState("language", "EN");
 
   document.title = languages[language].headerTitle;
