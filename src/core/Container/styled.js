@@ -19,5 +19,4 @@ export const ContainerElement = styled.div`
     padding: 24px;
     border-radius: 24px;
     background-color: ${({ theme }) => theme.color.innerContainerBackground};
-    filter: opacity(0.85);
 `;
