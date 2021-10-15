@@ -6,6 +6,11 @@ export const theme = {
         elementsBackground: "#133246",
     },
     breakpoint: {
-        mobileMax: "480px",
+        xs: "480px",
+        sm: "576px",
+        md: "768px",
+        lg: "992px",
+        xl: "1200px",
+        xxl: "1400px",
     },
 }

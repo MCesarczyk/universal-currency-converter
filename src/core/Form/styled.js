@@ -21,7 +21,7 @@ export const InputLabel = styled.label`
     align-items: center;
     justify-content: center;
 
-    @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}) {
+    @media (max-width: ${({ theme }) => theme.breakpoint.xs}) {
         flex-direction: column;
     }
 `;
@@ -36,7 +36,7 @@ export const FormInput = styled.input`
     border-radius: 5px;
     height: 24px;
 
-    @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}) {
+    @media (max-width: ${({ theme }) => theme.breakpoint.xs}) {
         width: 80%;
     }
 `;

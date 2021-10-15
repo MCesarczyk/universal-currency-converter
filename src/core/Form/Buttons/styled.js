@@ -4,7 +4,7 @@ export const ButtonsContainer = styled.div`
     display: flex;
     justify-content: center;
 
-    @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}) {
+    @media (max-width: ${({ theme }) => theme.breakpoint.xs}) {
             flex-direction: column;
             align-items: center;
     }
@@ -19,7 +19,7 @@ export const Button = styled.button`
     margin: 5px 10px;
     width: 45%;
 
-    @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}) {
+    @media (max-width: ${({ theme }) => theme.breakpoint.xs}) {
         width: 100%;
     }
 
