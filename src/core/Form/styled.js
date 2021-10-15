@@ -15,17 +15,6 @@ export const Legend = styled.legend`
     text-align: center;
 `;
 
-export const InputLabel = styled.label`
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-
-    @media (max-width: ${({ theme }) => theme.breakpoint.xs}) {
-        flex-direction: column;
-    }
-`;
-
 export const InputLabelText = styled.span`
     min-width: 100px;
 `;
