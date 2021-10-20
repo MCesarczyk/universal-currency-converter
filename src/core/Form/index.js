@@ -42,13 +42,39 @@ const Form = ({
     setWantedCurrency(target.value);
   };
 
+  let filteredRates = null;
+
+  const filterRatesObject = () => {
+    if (rates) {
+      const wantedCurrencies = currencies.map(({ id }) => id);
+      filteredRates = Object.fromEntries(Object.entries(rates).filter(
+        ([id]) => wantedCurrencies.includes(id)));
+    };
+  };
+
+  filterRatesObject();
+
   useEffect(() => {
     console.log(`Exchange: ${currentCurrency}/${wantedCurrency}`);
   }, [currentCurrency, wantedCurrency]);
 
+  // useEffect(() => {
+  //   console.log(ratesData);
+  // }, [ratesData]);
+
+  // const getExchangeRate = () => {
+  //   return (currencies.find(({ id }) => id === wantedCurrency).rate) / (currencies.find(({ id }) => id === currentCurrency).rate);
+  // };
+
   const getExchangeRate = () => {
-    return (currencies.find(({ id }) => id === wantedCurrency).rate) / (currencies.find(({ id }) => id === currentCurrency).rate);
+    if (filteredRates) {
+      return (1 / Object.values(filteredRates)[Object.keys(filteredRates).findIndex(key => key === wantedCurrency)]);
+    }
   };
+
+  useEffect(() => {
+    filteredRates && console.log(1 / Object.values(filteredRates)[Object.keys(filteredRates).findIndex(key => key === wantedCurrency)]);
+  }, [filteredRates]);
 
   const calculateResult = () => {
     setResult([(newAmount / getExchangeRate()).toFixed(2), " ", wantedCurrency]);
@@ -57,7 +83,7 @@ const Form = ({
   const onFormSubmit = (event) => {
     event.preventDefault();
 
-    getExchangeRate();
+    // getExchangeRate();
     calculateResult();
     setNewAmount("");
     setCheckingDate(`${languages[language].dateLabel}${date}`);
@@ -70,22 +96,10 @@ const Form = ({
     setNewAmount("");
     setResult("");
     setCheckingDate("");
-    setCurrentCurrency("EUR");
+    // setCurrentCurrency("EUR");
     setWantedCurrency("USD");
     inputRef.current.focus();
   };
-
-  let filteredRates = null;
-
-  const filterRatesObject = () => {
-    if (rates) {
-      const wantedCurrencies = currencies.map(({ id }) => id);
-      filteredRates = Object.fromEntries(Object.entries(rates).filter(
-        ([id]) => wantedCurrencies.includes(id)));
-    };
-  };
-
-  filterRatesObject();
 
   return (
     <form onSubmit={onFormSubmit} onReset={onFormReset}>
@@ -125,7 +139,7 @@ const Form = ({
             </LabelText>
           ) : (
             <>
-              <ContentWrapper>
+              {/* <ContentWrapper>
                 <LabelText>
                   Changed&nbsp;currency:
                 </LabelText>
@@ -140,7 +154,7 @@ const Form = ({
                     </option>
                   ))}
                 </FormSelect>
-              </ContentWrapper>
+              </ContentWrapper> */}
               <ContentWrapper>
                 <LabelText>
                   Wanted&nbsp;currency:
