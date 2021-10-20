@@ -13,7 +13,7 @@ export const useCurrentRates = () => {
   useEffect(() => {
     const getRates = async () => {
       try {
-        const response = await fetch(requestURL + "?base=" + ratesData.base);
+        const response = await fetch(requestURL);
 
         if (!response.ok) {
           throw new Error("No response");
