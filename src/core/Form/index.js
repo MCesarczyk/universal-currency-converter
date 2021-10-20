@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCurrentRates } from "./useCurrentRates";
 import Clock from "./Clock";
 import Buttons from "./Buttons";
@@ -27,22 +27,32 @@ const Form = ({
   const status = ratesData.status;
   const date = ratesData.date;
   const rates = ratesData.rates;
-  const [checkingDate, setCheckingDate] = useState("");
-  const [chosenCurrency, setChosenCurrency] = useState("EUR");
-  const [newAmount, setNewAmount] = useState("");
-  const [result, setResult] = useState([]);
   const inputRef = useRef(null);
 
-  const onCurrencyChange = ({ target }) => {
-    setChosenCurrency(target.value);
+  const [checkingDate, setCheckingDate] = useState("");
+  const [newAmount, setNewAmount] = useState("");
+  const [currentCurrency, setCurrentCurrency] = useState("EUR");
+  const [wantedCurrency, setWantedCurrency] = useState("USD");
+  const [result, setResult] = useState([]);
+
+  const onCurrentCurrencyChange = ({ target }) => {
+    setCurrentCurrency(target.value);
   };
 
+  const onWantedCurrencyChange = ({ target }) => {
+    setWantedCurrency(target.value);
+  };
+
+  useEffect(() => {
+    console.log(`Exchange: ${currentCurrency}/${wantedCurrency}`);
+  }, [currentCurrency, wantedCurrency]);
+
   const getExchangeRate = () => {
-    return currencies.find(({ id }) => id === chosenCurrency).rate;
+    return currencies.find(({ id }) => id === wantedCurrency).rate;
   };
 
   const calculateResult = () => {
-    setResult([(newAmount / getExchangeRate()).toFixed(2), " ", chosenCurrency]);
+    setResult([(newAmount / getExchangeRate()).toFixed(2), " ", wantedCurrency]);
   };
 
   const onFormSubmit = (event) => {
@@ -61,7 +71,8 @@ const Form = ({
     setNewAmount("");
     setResult("");
     setCheckingDate("");
-    setChosenCurrency("EUR");
+    setCurrentCurrency("EUR");
+    setWantedCurrency("USD");
     inputRef.current.focus();
   };
 
@@ -115,11 +126,11 @@ const Form = ({
             </LabelText>
           ) : (
             <>
-              <ContentWrapper>
+              {/* <ContentWrapper>
                 <LabelText>
                   Changed&nbsp;currency:
                 </LabelText>
-                <FormSelect>
+                <FormSelect name="currentCurrency" value={currentCurrency} onChange={onCurrentCurrencyChange}>
                   {Object.keys(filteredRates).map((key, value) => (
                     <option key={key} value={key}>
                       {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
@@ -130,12 +141,12 @@ const Form = ({
                     </option>
                   ))}
                 </FormSelect>
-              </ContentWrapper>
+              </ContentWrapper> */}
               <ContentWrapper>
                 <LabelText>
                   Wanted&nbsp;currency:
                 </LabelText>
-                <FormSelect onChange={onCurrencyChange}>
+                <FormSelect name="wantedCurrency" value={wantedCurrency} onChange={onWantedCurrencyChange}>
                   {Object.keys(filteredRates).map((key, value) => (
                     <option key={key} value={key}>
                       {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
