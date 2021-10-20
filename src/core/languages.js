@@ -2,7 +2,7 @@ const languages = {
   EN: {
     headerTitle: "Currency converter",
     inputLabel: "You give:",
-    inputPlaceholder: "Amount in PLN",
+    inputPlaceholder: "Amount in ",
     listTitle: "Currencies selection",
     resultTitle: "Calculated amount",
     resultLabel: "You get: ",
@@ -17,7 +17,7 @@ const languages = {
   PL: {
     headerTitle: "e-Kantor",
     inputLabel: "Wpłacasz:",
-    inputPlaceholder: "Kwota w PLN",
+    inputPlaceholder: "Kwota w ",
     listTitle: "Wybór walut",
     resultTitle: "Otrzymana kwota",
     resultLabel: "Dostajesz: ",

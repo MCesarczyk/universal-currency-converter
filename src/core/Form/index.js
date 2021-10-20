@@ -10,7 +10,6 @@ import {
   LabelText,
   FormInput,
   FormSelect,
-  FormResult,
   FormAnnotation
 } from "./styled";
 
@@ -48,7 +47,7 @@ const Form = ({
   }, [currentCurrency, wantedCurrency]);
 
   const getExchangeRate = () => {
-    return currencies.find(({ id }) => id === wantedCurrency).rate;
+    return (currencies.find(({ id }) => id === wantedCurrency).rate) / (currencies.find(({ id }) => id === currentCurrency).rate);
   };
 
   const calculateResult = () => {
@@ -103,7 +102,7 @@ const Form = ({
           <FormInput
             ref={inputRef}
             value={newAmount}
-            placeholder={languages[language].inputPlaceholder}
+            placeholder={languages[language].inputPlaceholder + currentCurrency}
             type="number"
             min="0.01"
             step="any"
@@ -126,7 +125,7 @@ const Form = ({
             </LabelText>
           ) : (
             <>
-              {/* <ContentWrapper>
+              <ContentWrapper>
                 <LabelText>
                   Changed&nbsp;currency:
                 </LabelText>
@@ -141,7 +140,7 @@ const Form = ({
                     </option>
                   ))}
                 </FormSelect>
-              </ContentWrapper> */}
+              </ContentWrapper>
               <ContentWrapper>
                 <LabelText>
                   Wanted&nbsp;currency:
