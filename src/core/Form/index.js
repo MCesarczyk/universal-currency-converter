@@ -58,23 +58,11 @@ const Form = ({
     console.log(`Exchange: ${currentCurrency}/${wantedCurrency}`);
   }, [currentCurrency, wantedCurrency]);
 
-  // useEffect(() => {
-  //   console.log(ratesData);
-  // }, [ratesData]);
-
-  // const getExchangeRate = () => {
-  //   return (currencies.find(({ id }) => id === wantedCurrency).rate) / (currencies.find(({ id }) => id === currentCurrency).rate);
-  // };
-
   const getExchangeRate = () => {
     if (filteredRates) {
       return (1 / Object.values(filteredRates)[Object.keys(filteredRates).findIndex(key => key === wantedCurrency)]);
     }
   };
-
-  useEffect(() => {
-    filteredRates && console.log(1 / Object.values(filteredRates)[Object.keys(filteredRates).findIndex(key => key === wantedCurrency)]);
-  }, [filteredRates]);
 
   const calculateResult = () => {
     setResult([(newAmount / getExchangeRate()).toFixed(2), " ", wantedCurrency]);
