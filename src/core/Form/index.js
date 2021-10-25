@@ -71,7 +71,6 @@ const Form = ({
   const onFormSubmit = (event) => {
     event.preventDefault();
 
-    // getExchangeRate();
     calculateResult();
     setNewAmount("");
     setCheckingDate(`${languages[language].dateLabel}${date}`);
@@ -84,7 +83,6 @@ const Form = ({
     setNewAmount("");
     setResult("");
     setCheckingDate("");
-    // setCurrentCurrency("EUR");
     setWantedCurrency("USD");
     inputRef.current.focus();
   };
@@ -127,22 +125,6 @@ const Form = ({
             </LabelText>
           ) : (
             <>
-              {/* <ContentWrapper>
-                <LabelText>
-                  Changed&nbsp;currency:
-                </LabelText>
-                <FormSelect name="currentCurrency" value={currentCurrency} onChange={onCurrentCurrencyChange}>
-                  {Object.keys(filteredRates).map((key, value) => (
-                    <option key={key} value={key}>
-                      {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
-                      {" - "}
-                      {key}
-                      {" - "}
-                      {currencies[currencies.findIndex(({ id }) => id === key)].label[language]}
-                    </option>
-                  ))}
-                </FormSelect>
-              </ContentWrapper> */}
               <ContentWrapper>
                 <LabelText>
                   Wanted&nbsp;currency:
@@ -154,7 +136,7 @@ const Form = ({
                       {" - "}
                       {key}
                       {" - "}
-                      {/* {currencies[currencies.findIndex(({ id }) => id === key)].label[language]} */}
+                      {Object.values(labelsEnglish)[Object.keys(labelsEnglish).indexOf(key)]}
                     </option>
                   ))}
                 </FormSelect>

@@ -33,7 +33,7 @@ export const labelsEnglish = {
     UAH: "Ukrainian hryvnia",
     USD: "US dollar",
     XDR: "Special Drawing Rights",
-    ZAR: "South Africa rand",
+    ZAR: "South African rand",
 };
 
 export const labelsPolish = {
