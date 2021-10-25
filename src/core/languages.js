@@ -2,8 +2,8 @@ const languages = {
   EN: {
     headerTitle: "Currency converter",
     inputLabel: "You give:",
-    inputPlaceholder: "Amount in PLN",
-    listTitle: "Current rate",
+    inputPlaceholder: "Amount in ",
+    listTitle: "Currencies selection",
     resultTitle: "Calculated amount",
     resultLabel: "You get: ",
     clockLabel: "Today is ",
@@ -17,8 +17,8 @@ const languages = {
   PL: {
     headerTitle: "e-Kantor",
     inputLabel: "Wpłacasz:",
-    inputPlaceholder: "Kwota w PLN",
-    listTitle: "Aktualny kurs",
+    inputPlaceholder: "Kwota w ",
+    listTitle: "Wybór walut",
     resultTitle: "Otrzymana kwota",
     resultLabel: "Dostajesz: ",
     clockLabel: "Dzisiaj jest ",

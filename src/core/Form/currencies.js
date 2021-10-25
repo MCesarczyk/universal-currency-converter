@@ -1,7 +1,6 @@
 const currencies = [
     {
         id: "EUR",
-        rate: 4.5302,
         label: {
             EN: "Euro",
             PL: "Euro"
@@ -9,8 +8,21 @@ const currencies = [
         checked: true
     },
     {
+        id: "PLN",
+        label: {
+            EN: "Polish zloty",
+            PL: "Polski złoty"
+        },
+    },
+    {
+        id: "CZK",
+        label: {
+            EN: "Czech crown",
+            PL: "Korona czeska"
+        },
+    },
+    {
         id: "USD",
-        rate: 3.7986,
         label: {
             EN: "American dollar",
             PL: "Dolar amerykański"
@@ -18,7 +30,6 @@ const currencies = [
     },
     {
         id: "AUD",
-        rate: 2.8779,
         label: {
             EN: "Australian dollar",
             PL: "Dolar australijski"
@@ -26,7 +37,6 @@ const currencies = [
     },
     {
         id: "BGN",
-        rate: 2.3162,
         label: {
             EN: "Bulgarian lev",
             PL: "Lew bułgarski"
@@ -34,7 +44,6 @@ const currencies = [
     },
     {
         id: "HRK",
-        rate: 0.6041,
         label: {
             EN: "Croatian kuna",
             PL: "Kuna chorwacka"

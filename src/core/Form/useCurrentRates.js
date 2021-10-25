@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 export const useCurrentRates = () => {
   const [ratesData, setRatesData] = useState({
     status: "loading",
-    base: "PLN",
+    base: "EUR",
     date: null,
     rates: null
   });
@@ -13,7 +13,7 @@ export const useCurrentRates = () => {
   useEffect(() => {
     const getRates = async () => {
       try {
-        const response = await fetch(requestURL + "?base=" + ratesData.base);
+        const response = await fetch(requestURL);
 
         if (!response.ok) {
           throw new Error("No response");

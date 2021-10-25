@@ -1,18 +1,22 @@
 import styled from "styled-components";
 import background from "../../assets/images/background.png";
 
-export const ContainerBody = styled.div`
+export const ContainerWrapper = styled.div`
     background-image: url("${background}");
-    background-size: cover;
+    background-size: contain;
     background-position: center;
+    background-attachment: scroll;
     background-color: ${({ theme }) => theme.color.background};
-    background-attachment: fixed;
+    max-width: ${({ theme }) => theme.breakpoint.xl};
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 export const ContainerElement = styled.div`
-    max-width: 360px;
-    min-width: 240px;
-    margin: 0 auto;
-    padding: 10px;
+    padding: 24px;
+    border-radius: 24px;
     background-color: ${({ theme }) => theme.color.innerContainerBackground};
 `;

@@ -1,19 +1,15 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCurrentRates } from "./useCurrentRates";
 import Clock from "./Clock";
 import Buttons from "./Buttons";
 import currencies from "./currencies";
-
+import { ContentWrapper } from "../../common/ContentWrapper";
 import {
   Fieldset,
   Legend,
-  InputLabel,
-  InputLabelText,
+  LabelText,
   FormInput,
-  List,
-  ListItem,
-  ListLabel,
-  FormResult,
+  FormSelect,
   FormAnnotation
 } from "./styled";
 
@@ -30,42 +26,20 @@ const Form = ({
   const status = ratesData.status;
   const date = ratesData.date;
   const rates = ratesData.rates;
-  const [checkingDate, setCheckingDate] = useState("");
-  const [chosenCurrency, setChosenCurrency] = useState("EUR");
-  const [newAmount, setNewAmount] = useState("");
-  const [result, setResult] = useState([]);
   const inputRef = useRef(null);
 
-  const onCurrencyChange = ({ target }) => {
-    setChosenCurrency(target.value);
+  const [checkingDate, setCheckingDate] = useState("");
+  const [newAmount, setNewAmount] = useState("");
+  const [currentCurrency, setCurrentCurrency] = useState("EUR");
+  const [wantedCurrency, setWantedCurrency] = useState("USD");
+  const [result, setResult] = useState([]);
+
+  const onCurrentCurrencyChange = ({ target }) => {
+    setCurrentCurrency(target.value);
   };
 
-  const getExchangeRate = () => {
-    return currencies.find(({ id }) => id === chosenCurrency).rate;
-  };
-
-  const calculateResult = () => {
-    setResult([(newAmount / getExchangeRate()).toFixed(2), " ", chosenCurrency]);
-  };
-
-  const onFormSubmit = (event) => {
-    event.preventDefault();
-
-    getExchangeRate();
-    calculateResult();
-    setNewAmount("");
-    setCheckingDate(`${languages[language].dateLabel}${date}`);
-    inputRef.current.focus();
-  };
-
-  const onFormReset = (event) => {
-    event.preventDefault();
-
-    setNewAmount("");
-    setResult("");
-    setCheckingDate("");
-    setChosenCurrency("EUR");
-    inputRef.current.focus();
+  const onWantedCurrencyChange = ({ target }) => {
+    setWantedCurrency(target.value);
   };
 
   let filteredRates = null;
@@ -80,22 +54,57 @@ const Form = ({
 
   filterRatesObject();
 
+  useEffect(() => {
+    console.log(`Exchange: ${currentCurrency}/${wantedCurrency}`);
+  }, [currentCurrency, wantedCurrency]);
+
+  const getExchangeRate = () => {
+    if (filteredRates) {
+      return (1 / Object.values(filteredRates)[Object.keys(filteredRates).findIndex(key => key === wantedCurrency)]);
+    }
+  };
+
+  const calculateResult = () => {
+    setResult([(newAmount / getExchangeRate()).toFixed(2), " ", wantedCurrency]);
+  };
+
+  const onFormSubmit = (event) => {
+    event.preventDefault();
+
+    // getExchangeRate();
+    calculateResult();
+    setNewAmount("");
+    setCheckingDate(`${languages[language].dateLabel}${date}`);
+    inputRef.current.focus();
+  };
+
+  const onFormReset = (event) => {
+    event.preventDefault();
+
+    setNewAmount("");
+    setResult("");
+    setCheckingDate("");
+    // setCurrentCurrency("EUR");
+    setWantedCurrency("USD");
+    inputRef.current.focus();
+  };
+
   return (
     <form onSubmit={onFormSubmit} onReset={onFormReset}>
       <Fieldset>
         <Legend>{headerTitle}</Legend>
-        <Clock 
+        <Clock
           languages={languages}
           language={language}
         />
-        <InputLabel>
-          <InputLabelText>
+        <ContentWrapper>
+          <LabelText>
             {inputLabel}
-          </InputLabelText>
+          </LabelText>
           <FormInput
             ref={inputRef}
             value={newAmount}
-            placeholder={languages[language].inputPlaceholder}
+            placeholder={languages[language].inputPlaceholder + currentCurrency}
             type="number"
             min="0.01"
             step="any"
@@ -103,50 +112,71 @@ const Form = ({
             autoFocus
             onChange={({ target }) => setNewAmount(target.value)}
           />
-        </InputLabel>
+        </ContentWrapper>
       </Fieldset>
       <Fieldset>
         <Legend>{listTitle}</Legend>
-        {status === "loading" ? (
-          <div>
-            {languages[language].loadingMessage}
-          </div>
-        ) : (status === "error" ? (
-          <div>
-            {languages[language].errorMessage}
-          </div>
-        ) : (
-          <List>
-            {Object.keys(filteredRates).map((key, value) => (
-              <ListItem key={key} >
-                <input
-                  type="radio"
-                  name="chosenCurrency"
-                  id={key}
-                  value={key}
-                  checked={chosenCurrency === key}
-                  onChange={onCurrencyChange}
-                />
-                <ListLabel htmlFor={key}>
-                  {currencies[currencies.findIndex(({ id }) => id === key)].label[language]}
-                </ListLabel>
-                {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
-              </ListItem>
-            ))
-            }
-          </List>
-        ))}
+        <ContentWrapper vertical>
+          {status === "loading" ? (
+            <LabelText>
+              {languages[language].loadingMessage}
+            </LabelText>
+          ) : (status === "error" ? (
+            <LabelText>
+              {languages[language].errorMessage}
+            </LabelText>
+          ) : (
+            <>
+              {/* <ContentWrapper>
+                <LabelText>
+                  Changed&nbsp;currency:
+                </LabelText>
+                <FormSelect name="currentCurrency" value={currentCurrency} onChange={onCurrentCurrencyChange}>
+                  {Object.keys(filteredRates).map((key, value) => (
+                    <option key={key} value={key}>
+                      {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
+                      {" - "}
+                      {key}
+                      {" - "}
+                      {currencies[currencies.findIndex(({ id }) => id === key)].label[language]}
+                    </option>
+                  ))}
+                </FormSelect>
+              </ContentWrapper> */}
+              <ContentWrapper>
+                <LabelText>
+                  Wanted&nbsp;currency:
+                </LabelText>
+                <FormSelect name="wantedCurrency" value={wantedCurrency} onChange={onWantedCurrencyChange}>
+                  {Object.keys(filteredRates).map((key, value) => (
+                    <option key={key} value={key}>
+                      {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
+                      {" - "}
+                      {key}
+                      {" - "}
+                      {currencies[currencies.findIndex(({ id }) => id === key)].label[language]}
+                    </option>
+                  ))}
+                </FormSelect>
+              </ContentWrapper>
+            </>
+          ))}
+        </ContentWrapper>
       </Fieldset>
       <Fieldset>
         <Legend>{resultTitle}</Legend>
-        <FormResult>
-          {resultLabel}
-          {result}
-        </FormResult>
+        <ContentWrapper>
+          <LabelText>
+            {resultLabel}
+          </LabelText>
+          <div>
+            {result}
+          </div>
+        </ContentWrapper>
         <FormAnnotation>
           {checkingDate}
         </FormAnnotation>
-        <Buttons 
+        <Buttons
           languages={languages}
           language={language}
         />

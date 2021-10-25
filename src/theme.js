@@ -1,7 +1,7 @@
 export const theme = {
     color: {
         background: "#ddd",
-        innerContainerBackground: "#eee",
+        innerContainerBackground: "rgb(238 238 238 / 75%)",
         elementsText: "#ebe6dc",
         elementsBackground: "#133246",
     },
