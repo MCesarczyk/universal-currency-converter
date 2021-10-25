@@ -12,6 +12,7 @@ import {
   FormSelect,
   FormAnnotation
 } from "./styled";
+import { labelsEnglish, labelsPolish } from "./currenciesLabels";
 
 const Form = ({
   languages,
@@ -46,9 +47,8 @@ const Form = ({
 
   const filterRatesObject = () => {
     if (rates) {
-      const wantedCurrencies = currencies.map(({ id }) => id);
       filteredRates = Object.fromEntries(Object.entries(rates).filter(
-        ([id]) => wantedCurrencies.includes(id)));
+        ([id]) => Object.keys(labelsEnglish).includes(id)));
     };
   };
 
@@ -154,7 +154,7 @@ const Form = ({
                       {" - "}
                       {key}
                       {" - "}
-                      {currencies[currencies.findIndex(({ id }) => id === key)].label[language]}
+                      {/* {currencies[currencies.findIndex(({ id }) => id === key)].label[language]} */}
                     </option>
                   ))}
                 </FormSelect>
