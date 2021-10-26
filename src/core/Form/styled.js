@@ -2,8 +2,12 @@ import styled from "styled-components";
 
 export const Fieldset = styled.fieldset`
     border-radius: 20px;
-    padding: 12px 24px;
+    padding: 16px 32px;
     margin-bottom: 10px;
+
+    @media (max-width: ${({ theme }) => theme.breakpoint.xs}) {
+        padding: 16px;
+    }
 `;
 
 export const Legend = styled.legend`
@@ -13,6 +17,7 @@ export const Legend = styled.legend`
     border-style: none;
     border-radius: 20px;
     text-align: center;
+    width: 200px;
 `;
 
 export const LabelText = styled.span`
@@ -22,19 +27,21 @@ export const LabelText = styled.span`
 
 export const FormInput = styled.input`
     width: 50%;
-    text-align: center;
-    border-radius: 5px;
-    height: 24px;
+    border-radius: 8px;
+    height: 32px;
+    padding-left: 16px;
 
-    @media (max-width: ${({ theme }) => theme.breakpoint.xs}) {
-        width: 80%;
+
+    @media (max-width: ${({ theme }) => theme.breakpoint.sm}) {
+        width: 100%;
     }
 `;
 
 export const FormSelect = styled.select`
-    width: 80%;
-    border-radius: 5px;
-    height: 24px;
+    width: 100%;
+    border-radius: 8px;
+    height: 32px;
+    padding-left: 8px;
 `;
 
 export const FormAnnotation = styled.p`
