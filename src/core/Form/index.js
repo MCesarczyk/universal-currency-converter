@@ -131,7 +131,7 @@ const Form = ({
             <>
               <ContentWrapper>
                 <LabelText>
-                  Current&nbsp;currency:
+                  {languages[language].currentCurrencyLabel}
                 </LabelText>
                 <FormSelect name="currentCurrency" value={currentCurrency} onChange={onCurrentCurrencyChange}>
                   {Object.keys(filteredRates).map((key, value) => (
@@ -147,7 +147,7 @@ const Form = ({
               </ContentWrapper>
               <ContentWrapper>
                 <LabelText>
-                  Wanted&nbsp;currency:
+                  {languages[language].wantedCurrencyLabel}
                 </LabelText>
                 <FormSelect name="wantedCurrency" value={wantedCurrency} onChange={onWantedCurrencyChange}>
                   {Object.keys(filteredRates).map((key, value) => (
