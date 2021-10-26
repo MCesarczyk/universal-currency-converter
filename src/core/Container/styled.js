@@ -9,7 +9,7 @@ export const ContainerWrapper = styled.div`
     background-color: ${({ theme }) => theme.color.background};
     max-width: ${({ theme }) => theme.breakpoint.xl};
     margin: 0 auto;
-    height: 100%;
+    min-height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
