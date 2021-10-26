@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useCurrentRates } from "./useCurrentRates";
 import Clock from "./Clock";
 import Buttons from "./Buttons";
-import currencies from "./currencies";
 import { ContentWrapper } from "../../common/ContentWrapper";
 import {
   Fieldset,
@@ -43,12 +42,14 @@ const Form = ({
     setWantedCurrency(target.value);
   };
 
+  const currenciesLabels = language === "PL" ? labelsPolish : labelsEnglish;
+  
   let filteredRates = null;
 
   const filterRatesObject = () => {
     if (rates) {
       filteredRates = Object.fromEntries(Object.entries(rates).filter(
-        ([id]) => Object.keys(labelsEnglish).includes(id)));
+        ([id]) => Object.keys(currenciesLabels).includes(id)));
     };
   };
 
@@ -136,7 +137,7 @@ const Form = ({
                       {" - "}
                       {key}
                       {" - "}
-                      {Object.values(labelsEnglish)[Object.keys(labelsEnglish).indexOf(key)]}
+                      {Object.values(currenciesLabels)[Object.keys(currenciesLabels).indexOf(key)]}
                     </option>
                   ))}
                 </FormSelect>
