@@ -20,7 +20,7 @@ export const ContainerElement = styled.div`
     border-radius: 24px;
     background-color: ${({ theme }) => theme.color.innerContainerBackground};
 
-    @media (max-width: ${({ theme }) => theme.breakpoint.sm}) {
+    @media (max-width: ${({ theme }) => theme.breakpoint.md}) {
         padding: 12px;
         width: 100%;
     }

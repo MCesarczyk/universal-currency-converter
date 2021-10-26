@@ -29,10 +29,9 @@ export const FormInput = styled.input`
     width: 50%;
     border-radius: 8px;
     height: 32px;
-    padding-left: 16px;
+    padding-left: 8px;
 
-
-    @media (max-width: ${({ theme }) => theme.breakpoint.sm}) {
+    @media (max-width: ${({ theme }) => theme.breakpoint.md}) {
         width: 100%;
     }
 `;

@@ -5,7 +5,7 @@ const Buttons = ({ languages, language }) => (
         <Button>
             {languages[language].mainButtonLabel}
         </Button>
-        <Button type="reset">
+        <Button reset type="reset">
             {languages[language].resetButtonLabel}
         </Button>
     </ButtonsContainer>
