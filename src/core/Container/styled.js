@@ -19,9 +19,13 @@ export const ContainerElement = styled.div`
     padding: 12px 24px;
     border-radius: 24px;
     background-color: ${({ theme }) => theme.color.innerContainerBackground};
+    width: ${({ theme }) => theme.breakpoint.md};
 
     @media (max-width: ${({ theme }) => theme.breakpoint.md}) {
-        padding: 12px;
         width: 100%;
+    }
+
+    @media (max-width: ${({ theme }) => theme.breakpoint.sm}) {
+        padding: 12px;
     }
 `;
