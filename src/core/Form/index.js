@@ -43,7 +43,7 @@ const Form = ({
   };
 
   const currenciesLabels = language === "PL" ? labelsPolish : labelsEnglish;
-  
+
   let filteredRates = null;
 
   const filterRatesObject = () => {
@@ -61,7 +61,11 @@ const Form = ({
 
   const getExchangeRate = () => {
     if (filteredRates) {
-      return (1 / Object.values(filteredRates)[Object.keys(filteredRates).findIndex(key => key === wantedCurrency)]);
+      return (
+        Object.values(filteredRates)[Object.keys(filteredRates).findIndex(key => key === currentCurrency)]
+        /
+        Object.values(filteredRates)[Object.keys(filteredRates).findIndex(key => key === wantedCurrency)]
+      );
     }
   };
 
@@ -125,6 +129,22 @@ const Form = ({
             </LabelText>
           ) : (
             <>
+              <ContentWrapper>
+                <LabelText>
+                  Current&nbsp;currency:
+                </LabelText>
+                <FormSelect name="currentCurrency" value={currentCurrency} onChange={onCurrentCurrencyChange}>
+                  {Object.keys(filteredRates).map((key, value) => (
+                    <option key={key} value={key}>
+                      {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
+                      {" - "}
+                      {key}
+                      {" - "}
+                      {Object.values(currenciesLabels)[Object.keys(currenciesLabels).indexOf(key)]}
+                    </option>
+                  ))}
+                </FormSelect>
+              </ContentWrapper>
               <ContentWrapper>
                 <LabelText>
                   Wanted&nbsp;currency:
