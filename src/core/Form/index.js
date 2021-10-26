@@ -87,6 +87,7 @@ const Form = ({
     setNewAmount("");
     setResult("");
     setCheckingDate("");
+    setCurrentCurrency("EUR");
     setWantedCurrency("USD");
     inputRef.current.focus();
   };
