@@ -12,10 +12,11 @@ export const ButtonsContainer = styled.div`
 
 export const Button = styled.button`
     color: ${({ theme }) => theme.color.elementsText};
-    background-color: ${({ theme }) => theme.color.elementsBackground};
+    background-color: ${({ theme }) => props => props.reset ? theme.color.crimson : theme.color.emerald};
+    border: none;
     display: inline-block;
     border-radius: 20px;
-    padding: 5px 10px;
+    padding: 8px 16px;
     margin: 5px 10px;
     width: 45%;
 

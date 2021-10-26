@@ -9,9 +9,11 @@ export const ContentWrapper = styled.label.attrs(props => ({
     flex-direction: ${props => props.direction};
     gap: 10px;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    width: 100%;
 
-    @media (max-width: ${({ theme }) => theme.breakpoint.xs}) {
+    @media (max-width: ${({ theme }) => theme.breakpoint.sm}) {
         flex-direction: column;
+        align-items: flex-start;
     }
 `;

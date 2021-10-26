@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useCurrentRates } from "./useCurrentRates";
 import Clock from "./Clock";
 import Buttons from "./Buttons";
-import currencies from "./currencies";
 import { ContentWrapper } from "../../common/ContentWrapper";
 import {
   Fieldset,
@@ -12,6 +11,7 @@ import {
   FormSelect,
   FormAnnotation
 } from "./styled";
+import { labelsEnglish, labelsPolish } from "./currenciesLabels";
 
 const Form = ({
   languages,
@@ -42,13 +42,14 @@ const Form = ({
     setWantedCurrency(target.value);
   };
 
+  const currenciesLabels = language === "PL" ? labelsPolish : labelsEnglish;
+
   let filteredRates = null;
 
   const filterRatesObject = () => {
     if (rates) {
-      const wantedCurrencies = currencies.map(({ id }) => id);
       filteredRates = Object.fromEntries(Object.entries(rates).filter(
-        ([id]) => wantedCurrencies.includes(id)));
+        ([id]) => Object.keys(currenciesLabels).includes(id)));
     };
   };
 
@@ -60,7 +61,11 @@ const Form = ({
 
   const getExchangeRate = () => {
     if (filteredRates) {
-      return (1 / Object.values(filteredRates)[Object.keys(filteredRates).findIndex(key => key === wantedCurrency)]);
+      return (
+        Object.values(filteredRates)[Object.keys(filteredRates).findIndex(key => key === currentCurrency)]
+        /
+        Object.values(filteredRates)[Object.keys(filteredRates).findIndex(key => key === wantedCurrency)]
+      );
     }
   };
 
@@ -71,9 +76,7 @@ const Form = ({
   const onFormSubmit = (event) => {
     event.preventDefault();
 
-    // getExchangeRate();
     calculateResult();
-    setNewAmount("");
     setCheckingDate(`${languages[language].dateLabel}${date}`);
     inputRef.current.focus();
   };
@@ -84,7 +87,7 @@ const Form = ({
     setNewAmount("");
     setResult("");
     setCheckingDate("");
-    // setCurrentCurrency("EUR");
+    setCurrentCurrency("EUR");
     setWantedCurrency("USD");
     inputRef.current.focus();
   };
@@ -127,9 +130,9 @@ const Form = ({
             </LabelText>
           ) : (
             <>
-              {/* <ContentWrapper>
+              <ContentWrapper>
                 <LabelText>
-                  Changed&nbsp;currency:
+                  {languages[language].currentCurrencyLabel}
                 </LabelText>
                 <FormSelect name="currentCurrency" value={currentCurrency} onChange={onCurrentCurrencyChange}>
                   {Object.keys(filteredRates).map((key, value) => (
@@ -138,14 +141,14 @@ const Form = ({
                       {" - "}
                       {key}
                       {" - "}
-                      {currencies[currencies.findIndex(({ id }) => id === key)].label[language]}
+                      {Object.values(currenciesLabels)[Object.keys(currenciesLabels).indexOf(key)]}
                     </option>
                   ))}
                 </FormSelect>
-              </ContentWrapper> */}
+              </ContentWrapper>
               <ContentWrapper>
                 <LabelText>
-                  Wanted&nbsp;currency:
+                  {languages[language].wantedCurrencyLabel}
                 </LabelText>
                 <FormSelect name="wantedCurrency" value={wantedCurrency} onChange={onWantedCurrencyChange}>
                   {Object.keys(filteredRates).map((key, value) => (
@@ -154,7 +157,7 @@ const Form = ({
                       {" - "}
                       {key}
                       {" - "}
-                      {currencies[currencies.findIndex(({ id }) => id === key)].label[language]}
+                      {Object.values(currenciesLabels)[Object.keys(currenciesLabels).indexOf(key)]}
                     </option>
                   ))}
                 </FormSelect>
