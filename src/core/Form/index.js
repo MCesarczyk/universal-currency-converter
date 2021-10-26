@@ -73,7 +73,6 @@ const Form = ({
     event.preventDefault();
 
     calculateResult();
-    setNewAmount("");
     setCheckingDate(`${languages[language].dateLabel}${date}`);
     inputRef.current.focus();
   };
