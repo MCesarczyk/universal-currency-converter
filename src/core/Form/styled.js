@@ -1,9 +1,14 @@
 import styled from "styled-components";
 
 export const Fieldset = styled.fieldset`
+    min-height: 100px;
     border-radius: 20px;
     padding: 16px 32px;
     margin-bottom: 10px;
+
+    @media (max-width: ${({ theme }) => theme.breakpoint.sm}) {
+        min-height: 128px;
+    }
 
     @media (max-width: ${({ theme }) => theme.breakpoint.xs}) {
         padding: 16px;
@@ -42,4 +47,5 @@ export const FormSelect = styled.select`
 export const FormAnnotation = styled.p`
     font-size: 12px;
     text-align: right;
+    min-height: 13px;
 `;
