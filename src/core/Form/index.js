@@ -117,9 +117,6 @@ const Form = ({
           />
         </ContentWrapper>
         <ContentWrapper>
-          <LabelText>
-            {languages[language].currentCurrencyLabel}
-          </LabelText>
           <FormSelect name="currentCurrency" value={currentCurrency} onChange={onCurrentCurrencyChange}>
             {!filteredRates ?
               <option>
@@ -128,8 +125,6 @@ const Form = ({
               :
               Object.keys(filteredRates).map((key, value) => (
                 <option key={key} value={key}>
-                  {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
-                  {" - "}
                   {key}
                   {" - "}
                   {Object.values(currenciesLabels)[Object.keys(currenciesLabels).indexOf(key)]}
