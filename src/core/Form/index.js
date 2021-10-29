@@ -116,6 +116,27 @@ const Form = ({
             onChange={({ target }) => setNewAmount(target.value)}
           />
         </ContentWrapper>
+        <ContentWrapper>
+          <LabelText>
+            {languages[language].currentCurrencyLabel}
+          </LabelText>
+          <FormSelect name="currentCurrency" value={currentCurrency} onChange={onCurrentCurrencyChange}>
+            {!filteredRates ?
+              <option>
+                {languages[language].loadingMessage}
+              </option>
+              :
+              Object.keys(filteredRates).map((key, value) => (
+                <option key={key} value={key}>
+                  {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
+                  {" - "}
+                  {key}
+                  {" - "}
+                  {Object.values(currenciesLabels)[Object.keys(currenciesLabels).indexOf(key)]}
+                </option>
+              ))}
+          </FormSelect>
+        </ContentWrapper>
       </Fieldset>
       <Fieldset>
         <Legend>{listTitle}</Legend>
@@ -130,22 +151,6 @@ const Form = ({
             </LabelText>
           ) : (
             <>
-              <ContentWrapper>
-                <LabelText>
-                  {languages[language].currentCurrencyLabel}
-                </LabelText>
-                <FormSelect name="currentCurrency" value={currentCurrency} onChange={onCurrentCurrencyChange}>
-                  {Object.keys(filteredRates).map((key, value) => (
-                    <option key={key} value={key}>
-                      {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
-                      {" - "}
-                      {key}
-                      {" - "}
-                      {Object.values(currenciesLabels)[Object.keys(currenciesLabels).indexOf(key)]}
-                    </option>
-                  ))}
-                </FormSelect>
-              </ContentWrapper>
               <ContentWrapper>
                 <LabelText>
                   {languages[language].wantedCurrencyLabel}
