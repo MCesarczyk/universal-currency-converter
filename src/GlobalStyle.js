@@ -21,4 +21,5 @@ body {
   max-width: ${({ theme }) => theme.breakpoint.xl};
   height: 100%;
   margin: 0 auto;
+  min-width: 300px;
 }`;
