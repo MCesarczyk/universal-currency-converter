@@ -115,8 +115,6 @@ const Form = ({
             autoFocus
             onChange={({ target }) => setNewAmount(target.value)}
           />
-        </ContentWrapper>
-        <ContentWrapper>
           <FormSelect name="currentCurrency" value={currentCurrency} onChange={onCurrentCurrencyChange}>
             {!currenciesLabels ?
               <option>
