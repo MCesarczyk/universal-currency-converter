@@ -118,12 +118,12 @@ const Form = ({
         </ContentWrapper>
         <ContentWrapper>
           <FormSelect name="currentCurrency" value={currentCurrency} onChange={onCurrentCurrencyChange}>
-            {!filteredRates ?
+            {!currenciesLabels ?
               <option>
                 {languages[language].loadingMessage}
               </option>
               :
-              Object.keys(filteredRates).map((key, value) => (
+              Object.keys(currenciesLabels).map((key, value) => (
                 <option key={key} value={key}>
                   {key}
                   {" - "}
