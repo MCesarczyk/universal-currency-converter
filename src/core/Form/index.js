@@ -33,11 +33,9 @@ const Form = ({
     }, DEMO_DELAY);
   }, [currentCurrency]);
 
-  const base = ratesData?.base;
   const date = ratesData?.date;
   const rates = ratesData?.rates;
   const success = ratesData?.success;
-  const error = ratesData?.error;
 
   const [wantedCurrency, setWantedCurrency] = useState("USD");
   const [checkingDate, setCheckingDate] = useState("");
@@ -81,8 +79,10 @@ const Form = ({
     }
   };
 
+  const currentRate = getExchangeRate();
+
   const calculateResult = () => {
-    setResult([(newAmount / getExchangeRate()).toFixed(2), " ", wantedCurrency]);
+    setResult(currentRate ? [(newAmount / currentRate).toFixed(2), " ", wantedCurrency] : "");
   };
 
   const onFormSubmit = (event) => {
