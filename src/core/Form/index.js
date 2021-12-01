@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useCurrentRates } from "./useCurrentRates";
+import { getCurrentRates } from "./getCurrentRates";
 import Clock from "./Clock";
 import Buttons from "./Buttons";
 import { ContentWrapper } from "../../common/ContentWrapper";
@@ -22,16 +22,28 @@ const Form = ({
   resultTitle,
   resultLabel
 }) => {
-  const ratesData = useCurrentRates();
+  const [currentCurrency, setCurrentCurrency] = useState('EUR');
+  const [ratesDatas, setRatesDatas] = useState(null);
+
+  useEffect(() => {
+    getCurrentRates(currentCurrency)
+      .then(data => setRatesDatas(data))
+  }, [currentCurrency]);
+
+  useEffect(() => {
+    console.log(ratesDatas);
+  }, [ratesDatas]);
+
+  const ratesData = getCurrentRates();
+
   const status = ratesData.status;
   const date = ratesData.date;
   const rates = ratesData.rates;
   const inputRef = useRef(null);
 
+  const [wantedCurrency, setWantedCurrency] = useState("USD");
   const [checkingDate, setCheckingDate] = useState("");
   const [newAmount, setNewAmount] = useState("");
-  const [currentCurrency, setCurrentCurrency] = useState("EUR");
-  const [wantedCurrency, setWantedCurrency] = useState("USD");
   const [result, setResult] = useState([]);
 
   const onCurrentCurrencyChange = ({ target }) => {
@@ -58,6 +70,10 @@ const Form = ({
   useEffect(() => {
     console.log(`Exchange: ${currentCurrency}/${wantedCurrency}`);
   }, [currentCurrency, wantedCurrency]);
+
+  console.log(`Rates data: ${Object.entries(ratesData)}`);
+  useEffect(() => {
+  }, [ratesData]);
 
   const getExchangeRate = () => {
     if (filteredRates) {
@@ -149,7 +165,7 @@ const Form = ({
                   {languages[language].wantedCurrencyLabel}
                 </LabelText>
                 <FormSelect name="wantedCurrency" value={wantedCurrency} onChange={onWantedCurrencyChange}>
-                  {Object.keys(filteredRates).map((key, value) => (
+                  {filteredRates && Object.keys(filteredRates).map((key, value) => (
                     <option key={key} value={key}>
                       {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
                       {" - "}
