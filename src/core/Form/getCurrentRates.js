@@ -13,5 +13,6 @@ export const getCurrentRates = async (currencyBase) => {
 
   } catch (error) {
     console.error(error.message);
+    return { success: false, error: error };
   }
 };
