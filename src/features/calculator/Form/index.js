@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getCurrentRates } from "../getCurrentRates";
 import Clock from "../../clock/Clock";
 import Buttons from "./Buttons";
@@ -26,7 +26,7 @@ const Form = ({
   const [ratesData, setRatesData] = useState(null);
   const [newAmount, setNewAmount] = useState("");
   const [currentCurrency, setCurrentCurrency] = useLocalStorageState("currentCurrency", "EUR");
-  const [targetCurrency, setTargetCurrency] = useLocalStorageState("targetCurrency", "USD");
+  const [wantedCurrency, setWantedCurrency] = useLocalStorageState("targetCurrency", "USD");
   const [result, setResult] = useState([]);
   const [checkingDate, setCheckingDate] = useState("");
 
@@ -40,12 +40,31 @@ const Form = ({
 
   const currenciesLabels = language === "PL" ? labelsPolish : labelsEnglish;
 
+  const exchangeMoney = () => {
+    getCurrentRates(currentCurrency)
+      .then(data => setRatesData(data))
+      .then(() => calculateResult())
+      .then(
+        setCheckingDate(
+          newAmount > 0 && date !== undefined
+            ? `${languages[language].dateLabel}${date}`
+            : ''
+        )
+      )
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      exchangeMoney();
+    }, DEMO_DELAY);
+  }, [newAmount, currentCurrency, wantedCurrency]);
+
   const onCurrentCurrencyChange = ({ target }) => {
     setCurrentCurrency(target.value);
   };
 
   const onWantedCurrencyChange = ({ target }) => {
-    setTargetCurrency(target.value);
+    setWantedCurrency(target.value);
   };
 
   let filteredRates = null;
@@ -64,7 +83,7 @@ const Form = ({
       return (
         Object.values(filteredRates)[Object.keys(filteredRates).findIndex(key => key === currentCurrency)]
         /
-        Object.values(filteredRates)[Object.keys(filteredRates).findIndex(key => key === targetCurrency)]
+        Object.values(filteredRates)[Object.keys(filteredRates).findIndex(key => key === wantedCurrency)]
       );
     }
   };
@@ -74,30 +93,10 @@ const Form = ({
   const calculateResult = () => {
     setResult(
       currentRate && newAmount > 0
-        ? [(newAmount / currentRate).toFixed(2), " ", targetCurrency]
+        ? [(newAmount / currentRate).toFixed(2), " ", wantedCurrency]
         : ""
     );
   };
-
-  const getResult = calculateResult;
-
-  const exchangeMoney = useCallback(() => {
-    getCurrentRates(currentCurrency)
-      .then(data => setRatesData(data))
-      .then(() => getResult())
-      .then(
-        setCheckingDate(
-          newAmount > 0 && date !== undefined
-            ? `${languages[language].dateLabel}${date}`
-            : ''
-        )
-      )
-  }, [currentCurrency, date, language, languages, newAmount, getResult]
-  );
-
-  useEffect(() => {
-    setTimeout(() => exchangeMoney(), DEMO_DELAY);
-  }, [newAmount, currentCurrency, targetCurrency, exchangeMoney]);
 
   const onFormSubmit = (event) => {
     event.preventDefault();
@@ -113,7 +112,7 @@ const Form = ({
     setResult("");
     setCheckingDate("");
     setCurrentCurrency("EUR");
-    setTargetCurrency("USD");
+    setWantedCurrency("USD");
   };
 
   return (
@@ -177,7 +176,7 @@ const Form = ({
               <LabelText>
                 {languages[language].wantedCurrencyLabel}
               </LabelText>
-              <FormSelect name="wantedCurrency" value={targetCurrency} onChange={onWantedCurrencyChange}>
+              <FormSelect name="wantedCurrency" value={wantedCurrency} onChange={onWantedCurrencyChange}>
                 {filteredRates && Object.keys(filteredRates).map((key, value) => (
                   <option key={key} value={key}>
                     {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
