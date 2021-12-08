@@ -12,3 +12,11 @@ export const ClockElement = styled.p`
     margin: 0 0 8px 0;
     text-align: center;
 `;
+
+export const ClockLabel = styled.span`
+    margin-right: 8px;
+    
+    @media (max-width: ${({ theme }) => theme.breakpoint.md}) {
+        display: none;
+    }
+`;
