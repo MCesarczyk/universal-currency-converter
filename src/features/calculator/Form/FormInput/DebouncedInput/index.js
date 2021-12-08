@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { debounce } from '../../../../assets/utils/debounce';
+import { debounce } from '../../../../../utils/debounce';
 
 export class DebouncedInput extends React.PureComponent {
     static propTypes = {

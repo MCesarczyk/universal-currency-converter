@@ -1,4 +1,5 @@
-import { ButtonsContainer, Button } from "./styled";
+import { ButtonsContainer } from "./styled";
+import { Button } from "../../../../common/Button";
 
 const Buttons = ({ languages, language }) => (
     <ButtonsContainer>

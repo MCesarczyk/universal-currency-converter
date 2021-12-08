@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { getCurrentRates } from "./getCurrentRates";
-import Clock from "./Clock";
+import { getCurrentRates } from "../getCurrentRates";
+import Clock from "../../clock/Clock";
 import Buttons from "./Buttons";
-import { ContentWrapper } from "../../common/ContentWrapper";
+import { ContentWrapper } from "../../../common/ContentWrapper";
 import {
   Fieldset,
   Legend,
@@ -11,7 +11,7 @@ import {
   FormAnnotation
 } from "./styled";
 import { FormInput } from "./FormInput";
-import { labelsEnglish, labelsPolish } from "./currenciesLabels";
+import { labelsEnglish, labelsPolish } from "../currenciesLabels";
 
 const Form = ({
   languages,

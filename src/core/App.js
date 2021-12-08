@@ -1,8 +1,8 @@
 import Container from "./Container";
-import Form from "./Form";
-import Switcher from "./Switcher";
-import languages from "./languages";
-import { useLocalStorageState } from "./useLocalStorageState";
+import Form from "../features/calculator/Form";
+import Switcher from "../features/languages/Switcher";
+import languages from "../features/languages/languages";
+import { useLocalStorageState } from "../utils/useLocalStorageState";
 
 const App = () => {
   const [language, setLanguage] = useLocalStorageState("language", "EN");
