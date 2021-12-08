@@ -23,16 +23,16 @@ const Form = ({
   resultTitle,
   resultLabel
 }) => {
+  const CURRENT_CURRENCY_DEFAULT = "EUR";
+  const TARGET_CURRENCY_DEFAULT = "PLN";
+  const LOADING_DELAY = 500;
+
   const [ratesData, setRatesData] = useState(null);
   const [newAmount, setNewAmount] = useState("");
-  const [currentCurrency, setCurrentCurrency] = useLocalStorageState("currentCurrency", "EUR");
-  const [wantedCurrency, setWantedCurrency] = useLocalStorageState("targetCurrency", "USD");
+  const [currentCurrency, setCurrentCurrency] = useLocalStorageState("currentCurrency", CURRENT_CURRENCY_DEFAULT);
+  const [targetCurrency, setTargetCurrency] = useLocalStorageState("targetCurrency", TARGET_CURRENCY_DEFAULT);
   const [result, setResult] = useState([]);
   const [checkingDate, setCheckingDate] = useState("");
-
-  const DEMO_DELAY = 300;
-  const minLength = 0;
-  const infinite = false;
 
   const date = ratesData?.date;
   const rates = ratesData?.rates;
@@ -40,31 +40,12 @@ const Form = ({
 
   const currenciesLabels = language === "PL" ? labelsPolish : labelsEnglish;
 
-  const exchangeMoney = () => {
-    getCurrentRates(currentCurrency)
-      .then(data => setRatesData(data))
-      .then(() => calculateResult())
-      .then(
-        setCheckingDate(
-          newAmount > 0 && date !== undefined
-            ? `${languages[language].dateLabel}${date}`
-            : ''
-        )
-      )
-  };
-
-  useEffect(() => {
-    setTimeout(() => {
-      exchangeMoney();
-    }, DEMO_DELAY);
-  }, [newAmount, currentCurrency, wantedCurrency]);
-
   const onCurrentCurrencyChange = ({ target }) => {
     setCurrentCurrency(target.value);
   };
 
-  const onWantedCurrencyChange = ({ target }) => {
-    setWantedCurrency(target.value);
+  const onTargetCurrencyChange = ({ target }) => {
+    setTargetCurrency(target.value);
   };
 
   let filteredRates = null;
@@ -83,7 +64,7 @@ const Form = ({
       return (
         Object.values(filteredRates)[Object.keys(filteredRates).findIndex(key => key === currentCurrency)]
         /
-        Object.values(filteredRates)[Object.keys(filteredRates).findIndex(key => key === wantedCurrency)]
+        Object.values(filteredRates)[Object.keys(filteredRates).findIndex(key => key === targetCurrency)]
       );
     }
   };
@@ -93,10 +74,30 @@ const Form = ({
   const calculateResult = () => {
     setResult(
       currentRate && newAmount > 0
-        ? [(newAmount / currentRate).toFixed(2), " ", wantedCurrency]
+        ? [(newAmount / currentRate).toFixed(2), " ", targetCurrency]
         : ""
     );
   };
+
+  const exchangeMoney = () => {
+    getCurrentRates(currentCurrency)
+      .then(data => setRatesData(data))
+      .then(() => calculateResult())
+      .then(
+        setCheckingDate(
+          newAmount > 0 && date !== undefined
+            ? `${languages[language].dateLabel}${date}`
+            : ''
+        )
+      )
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      exchangeMoney();
+    }, LOADING_DELAY);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newAmount, currentCurrency, targetCurrency]);
 
   const onFormSubmit = (event) => {
     event.preventDefault();
@@ -111,8 +112,8 @@ const Form = ({
     setNewAmount("");
     setResult("");
     setCheckingDate("");
-    setCurrentCurrency("EUR");
-    setWantedCurrency("USD");
+    setCurrentCurrency(CURRENT_CURRENCY_DEFAULT);
+    setTargetCurrency(TARGET_CURRENCY_DEFAULT);
   };
 
   return (
@@ -136,8 +137,8 @@ const Form = ({
             required
             autoFocus
             onChange={({ target }) => setNewAmount(target.value)}
-            minLength={minLength}
-            debounceTimeout={infinite ? -1 : DEMO_DELAY}
+            minLength={0}
+            debounceTimeout={LOADING_DELAY}
           />
           <FormSelect name="currentCurrency" value={currentCurrency} onChange={onCurrentCurrencyChange}>
             {!currenciesLabels ?
@@ -174,9 +175,9 @@ const Form = ({
           {success === true &&
             <ContentWrapper>
               <LabelText>
-                {languages[language].wantedCurrencyLabel}
+                {languages[language].targetCurrencyLabel}
               </LabelText>
-              <FormSelect name="wantedCurrency" value={wantedCurrency} onChange={onWantedCurrencyChange}>
+              <FormSelect name="targetCurrency" value={targetCurrency} onChange={onTargetCurrencyChange}>
                 {filteredRates && Object.keys(filteredRates).map((key, value) => (
                   <option key={key} value={key}>
                     {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
