@@ -1,13 +1,7 @@
 import styled from "styled-components";
-import background from "../../assets/images/background.png";
 
 export const ContainerWrapper = styled.div`
-    background-image: url("${background}");
-    background-size: contain;
-    background-position: center;
-    background-attachment: scroll;
-    background-color: ${({ theme }) => theme.color.background};
-    max-width: ${({ theme }) => theme.breakpoint.xl};
+    background-color: transparent;
     margin: 0 auto;
     min-height: 100%;
     display: flex;
