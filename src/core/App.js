@@ -1,6 +1,5 @@
 import Container from "./Container";
 import Form from "../features/calculator/Form";
-import Switcher from "../features/languages/Switcher";
 import languages from "../features/languages/languages";
 import { useLocalStorageState } from "../utils/useLocalStorageState";
 import TitleBeam from "./TitleBeam";
@@ -12,13 +11,13 @@ const App = () => {
 
   return (
     <>
-      <TitleBeam />
+      <TitleBeam
+        languages={languages}
+        language={language}
+        setLanguage={setLanguage}
+        title={languages[language].headerTitle}
+      />
       <Container>
-        <Switcher
-          languages={languages}
-          language={language}
-          setLanguage={setLanguage}
-        />
         <Form
           languages={languages}
           language={language}

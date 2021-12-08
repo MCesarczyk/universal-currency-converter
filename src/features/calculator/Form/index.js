@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getCurrentRates } from "../getCurrentRates";
-import Clock from "../../clock/Clock";
 import Buttons from "./Buttons";
 import { ContentWrapper } from "../../../common/ContentWrapper";
 import Fieldset from "../../../common/Fieldset";
@@ -118,10 +117,6 @@ const Form = ({
       <Fieldset
         title={headerTitle}
       >
-        <Clock
-          languages={languages}
-          language={language}
-        />
         <ContentWrapper>
           <Label text={inputLabel} />
           <Input
