@@ -3,14 +3,11 @@ import { getCurrentRates } from "../getCurrentRates";
 import Clock from "../../clock/Clock";
 import Buttons from "./Buttons";
 import { ContentWrapper } from "../../../common/ContentWrapper";
-import {
-  Fieldset,
-  Legend,
-  LabelText,
-  FormSelect,
-  FormAnnotation
-} from "./styled";
-import { FormInput } from "./FormInput";
+import Fieldset from "../../../common/Fieldset";
+import Label from "../../../common/Label";
+import Annotation from "../../../common/Annotation";
+import { Select } from "../../../common/Select";
+import { Input } from "./Input";
 import { labelsEnglish, labelsPolish } from "../currenciesLabels";
 import { useLocalStorageState } from "../../../utils/useLocalStorageState";
 
@@ -96,7 +93,7 @@ const Form = ({
     setTimeout(() => {
       exchangeMoney();
     }, LOADING_DELAY);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newAmount, currentCurrency, targetCurrency]);
 
   const onFormSubmit = (event) => {
@@ -118,17 +115,16 @@ const Form = ({
 
   return (
     <form onSubmit={onFormSubmit} onReset={onFormReset}>
-      <Fieldset>
-        <Legend>{headerTitle}</Legend>
+      <Fieldset
+        title={headerTitle}
+      >
         <Clock
           languages={languages}
           language={language}
         />
         <ContentWrapper>
-          <LabelText>
-            {inputLabel}
-          </LabelText>
-          <FormInput
+          <Label text={inputLabel} />
+          <Input
             value={newAmount}
             placeholder={languages[language].inputPlaceholder + currentCurrency}
             type="number"
@@ -140,7 +136,7 @@ const Form = ({
             minLength={0}
             debounceTimeout={LOADING_DELAY}
           />
-          <FormSelect name="currentCurrency" value={currentCurrency} onChange={onCurrentCurrencyChange}>
+          <Select name="currentCurrency" value={currentCurrency} onChange={onCurrentCurrencyChange}>
             {!currenciesLabels ?
               <option>
                 {languages[language].loadingMessage}
@@ -153,31 +149,26 @@ const Form = ({
                   {Object.values(currenciesLabels)[Object.keys(currenciesLabels).indexOf(key)]}
                 </option>
               ))}
-          </FormSelect>
+          </Select>
         </ContentWrapper>
       </Fieldset>
-      <Fieldset>
-        <Legend>{listTitle}</Legend>
+      <Fieldset
+        title={listTitle}
+      >
         <ContentWrapper vertical>
 
           {success === undefined &&
-            <LabelText>
-              {languages[language].loadingMessage}
-            </LabelText>
+            <Label text={languages[language].loadingMessage} />
           }
 
           {success === false &&
-            <LabelText>
-              {languages[language].errorMessage}
-            </LabelText>
+            <Label text={languages[language].errorMessage} />
           }
 
           {success === true &&
             <ContentWrapper>
-              <LabelText>
-                {languages[language].targetCurrencyLabel}
-              </LabelText>
-              <FormSelect name="targetCurrency" value={targetCurrency} onChange={onTargetCurrencyChange}>
+              <Label text={languages[language].targetCurrencyLabel} />
+              <Select name="targetCurrency" value={targetCurrency} onChange={onTargetCurrencyChange}>
                 {filteredRates && Object.keys(filteredRates).map((key, value) => (
                   <option key={key} value={key}>
                     {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
@@ -187,25 +178,22 @@ const Form = ({
                     {Object.values(currenciesLabels)[Object.keys(currenciesLabels).indexOf(key)]}
                   </option>
                 ))}
-              </FormSelect>
+              </Select>
             </ContentWrapper>
           }
 
         </ContentWrapper>
       </Fieldset>
-      <Fieldset>
-        <Legend>{resultTitle}</Legend>
+      <Fieldset
+        title={resultTitle}
+      >
         <ContentWrapper>
-          <LabelText>
-            {resultLabel}
-          </LabelText>
+          <Label text={resultLabel} />
           <div>
             {result}
           </div>
         </ContentWrapper>
-        <FormAnnotation>
-          {checkingDate}
-        </FormAnnotation>
+        <Annotation text={checkingDate} />
         <Buttons
           languages={languages}
           language={language}
