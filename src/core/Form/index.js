@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getCurrentRates } from "./getCurrentRates";
 import Clock from "./Clock";
 import Buttons from "./Buttons";
@@ -7,10 +7,10 @@ import {
   Fieldset,
   Legend,
   LabelText,
-  FormInput,
   FormSelect,
   FormAnnotation
 } from "./styled";
+import { FormInput } from "./FormInput";
 import { labelsEnglish, labelsPolish } from "./currenciesLabels";
 
 const Form = ({
@@ -22,27 +22,37 @@ const Form = ({
   resultTitle,
   resultLabel
 }) => {
-  const [currentCurrency, setCurrentCurrency] = useState('EUR');
   const [ratesData, setRatesData] = useState(null);
+  const [newAmount, setNewAmount] = useState("");
+  const [currentCurrency, setCurrentCurrency] = useState('EUR');
+  const [wantedCurrency, setWantedCurrency] = useState("USD");
+  const [result, setResult] = useState([]);
+  const [checkingDate, setCheckingDate] = useState("");
+  
   const DEMO_DELAY = 1_000;
+  const minLength = 0;
+  const infinite = false;
+  
+  const date = ratesData?.date;
+  const rates = ratesData?.rates;
+  const success = ratesData?.success;
+  
+  const currenciesLabels = language === "PL" ? labelsPolish : labelsEnglish;
 
   useEffect(() => {
     setTimeout(() => {
       getCurrentRates(currentCurrency)
         .then(data => setRatesData(data))
-    }, DEMO_DELAY);
-  }, [currentCurrency]);
-
-  const date = ratesData?.date;
-  const rates = ratesData?.rates;
-  const success = ratesData?.success;
-
-  const [wantedCurrency, setWantedCurrency] = useState("USD");
-  const [checkingDate, setCheckingDate] = useState("");
-  const [newAmount, setNewAmount] = useState("");
-  const [result, setResult] = useState([]);
-
-  const inputRef = useRef(null);
+          .then(() => calculateResult())
+            .then(
+              setCheckingDate(
+                newAmount > 0 && date !== undefined 
+                  ? `${languages[language].dateLabel}${date}` 
+                  : ''
+              )    
+            )  
+    }, DEMO_DELAY);        
+  }, [newAmount, currentCurrency, wantedCurrency]);  
 
   const onCurrentCurrencyChange = ({ target }) => {
     setCurrentCurrency(target.value);
@@ -51,8 +61,6 @@ const Form = ({
   const onWantedCurrencyChange = ({ target }) => {
     setWantedCurrency(target.value);
   };
-
-  const currenciesLabels = language === "PL" ? labelsPolish : labelsEnglish;
 
   let filteredRates = null;
 
@@ -64,10 +72,6 @@ const Form = ({
   };
 
   filterRatesObject();
-
-  useEffect(() => {
-    console.log(`Exchange: ${currentCurrency}/${wantedCurrency}`);
-  }, [currentCurrency, wantedCurrency]);
 
   const getExchangeRate = () => {
     if (filteredRates) {
@@ -82,7 +86,11 @@ const Form = ({
   const currentRate = getExchangeRate();
 
   const calculateResult = () => {
-    setResult(currentRate ? [(newAmount / currentRate).toFixed(2), " ", wantedCurrency] : "");
+    setResult(
+      currentRate && newAmount > 0 
+        ? [(newAmount / currentRate).toFixed(2), " ", wantedCurrency] 
+        : ""
+    );
   };
 
   const onFormSubmit = (event) => {
@@ -90,7 +98,6 @@ const Form = ({
 
     calculateResult();
     setCheckingDate(`${languages[language].dateLabel}${date}`);
-    inputRef.current.focus();
   };
 
   const onFormReset = (event) => {
@@ -101,7 +108,6 @@ const Form = ({
     setCheckingDate("");
     setCurrentCurrency("EUR");
     setWantedCurrency("USD");
-    inputRef.current.focus();
   };
 
   return (
@@ -117,7 +123,6 @@ const Form = ({
             {inputLabel}
           </LabelText>
           <FormInput
-            ref={inputRef}
             value={newAmount}
             placeholder={languages[language].inputPlaceholder + currentCurrency}
             type="number"
@@ -126,6 +131,8 @@ const Form = ({
             required
             autoFocus
             onChange={({ target }) => setNewAmount(target.value)}
+            minLength={minLength}
+            debounceTimeout={infinite ? -1 : DEMO_DELAY}
           />
           <FormSelect name="currentCurrency" value={currentCurrency} onChange={onCurrentCurrencyChange}>
             {!currenciesLabels ?
