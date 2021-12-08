@@ -28,31 +28,35 @@ const Form = ({
   const [wantedCurrency, setWantedCurrency] = useState("USD");
   const [result, setResult] = useState([]);
   const [checkingDate, setCheckingDate] = useState("");
-  
-  const DEMO_DELAY = 1_000;
+
+  const DEMO_DELAY = 300;
   const minLength = 0;
   const infinite = false;
-  
+
   const date = ratesData?.date;
   const rates = ratesData?.rates;
   const success = ratesData?.success;
-  
+
   const currenciesLabels = language === "PL" ? labelsPolish : labelsEnglish;
+
+  const exchangeMoney = () => {
+    getCurrentRates(currentCurrency)
+      .then(data => setRatesData(data))
+      .then(() => calculateResult())
+      .then(
+        setCheckingDate(
+          newAmount > 0 && date !== undefined
+            ? `${languages[language].dateLabel}${date}`
+            : ''
+        )
+      )
+  };
 
   useEffect(() => {
     setTimeout(() => {
-      getCurrentRates(currentCurrency)
-        .then(data => setRatesData(data))
-          .then(() => calculateResult())
-            .then(
-              setCheckingDate(
-                newAmount > 0 && date !== undefined 
-                  ? `${languages[language].dateLabel}${date}` 
-                  : ''
-              )    
-            )  
-    }, DEMO_DELAY);        
-  }, [newAmount, currentCurrency, wantedCurrency]);  
+      exchangeMoney();
+    }, DEMO_DELAY);
+  }, [newAmount, currentCurrency, wantedCurrency]);
 
   const onCurrentCurrencyChange = ({ target }) => {
     setCurrentCurrency(target.value);
@@ -87,8 +91,8 @@ const Form = ({
 
   const calculateResult = () => {
     setResult(
-      currentRate && newAmount > 0 
-        ? [(newAmount / currentRate).toFixed(2), " ", wantedCurrency] 
+      currentRate && newAmount > 0
+        ? [(newAmount / currentRate).toFixed(2), " ", wantedCurrency]
         : ""
     );
   };
@@ -153,16 +157,19 @@ const Form = ({
       <Fieldset>
         <Legend>{listTitle}</Legend>
         <ContentWrapper vertical>
+
           {success === undefined &&
             <LabelText>
               {languages[language].loadingMessage}
             </LabelText>
           }
+
           {success === false &&
             <LabelText>
               {languages[language].errorMessage}
             </LabelText>
           }
+
           {success === true &&
             <ContentWrapper>
               <LabelText>
@@ -181,6 +188,7 @@ const Form = ({
               </FormSelect>
             </ContentWrapper>
           }
+
         </ContentWrapper>
       </Fieldset>
       <Fieldset>
