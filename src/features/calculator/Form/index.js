@@ -21,7 +21,7 @@ const Form = ({
 }) => {
   const CURRENT_CURRENCY_DEFAULT = "EUR";
   const TARGET_CURRENCY_DEFAULT = "PLN";
-  const LOADING_DELAY = 1_000;
+  const LOADING_DELAY = 500;
 
   const [ratesData, setRatesData] = useState(null);
   const [newAmount, setNewAmount] = useState("");
