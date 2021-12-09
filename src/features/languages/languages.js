@@ -10,8 +10,8 @@ const languages = {
     loadingMessage: "Loading... please wait",
     errorMessage: "Unable to fetch data...\n" +
     "please check your internet connection.",
-    mainButtonLabel: "Calculate",
-    resetButtonLabel: "Reset",
+    mainButtonLabel: "Switch currencies",
+    resetButtonLabel: "Clear",
     dateLabel: "*rate valid on: "
   },
   PL: {
@@ -25,7 +25,7 @@ const languages = {
     loadingMessage: "Pobieranie danych...",
     errorMessage: "Nie udało się pobrać danych...\n" +
     "sprawdź swoje połączenie internetowe",
-    mainButtonLabel: "Przelicz",
+    mainButtonLabel: "Przełącz waluty",
     resetButtonLabel: "Wyczyść",
     dateLabel: "*wg kursu z dnia: "
   }

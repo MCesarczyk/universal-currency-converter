@@ -44,6 +44,14 @@ const Form = ({
     setTargetCurrency(target.value);
   };
 
+  const switchValues = () => {
+    const oldCurrent = currentCurrency;
+    const oldTarget = targetCurrency;
+
+    setCurrentCurrency(oldTarget);
+    setTargetCurrency(oldCurrent);
+  };
+
   let filteredRates = null;
 
   const filterRatesObject = () => {
@@ -185,6 +193,7 @@ const Form = ({
         <Buttons
           languages={languages}
           language={language}
+          onButtonClick={switchValues}
         />
       </Fieldset>
     </form>
