@@ -27,4 +27,5 @@ body {
   height: 100%;
   margin: 0 auto;
   min-width: 300px;
+  overflow-y: hidden;
 }`;

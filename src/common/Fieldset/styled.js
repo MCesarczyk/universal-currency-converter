@@ -5,14 +5,7 @@ export const StyledFieldset = styled.fieldset`
     border-radius: 20px;
     padding: 16px 32px;
     margin-bottom: 10px;
-
-    @media (max-width: ${({ theme }) => theme.breakpoint.sm}) {
-        min-height: 128px;
-    }
-
-    @media (max-width: ${({ theme }) => theme.breakpoint.xs}) {
-        padding: 16px;
-    }
+    min-height: 128px;
 `;
 
 export const Legend = styled.legend`

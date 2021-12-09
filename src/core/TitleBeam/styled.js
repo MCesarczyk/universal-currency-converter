@@ -1,14 +1,20 @@
 import styled from "styled-components";
 
 export const StyledBeam = styled.header`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     width: 100%;
     color: ${({ theme }) => theme.color.elementsText};
     background-color: ${({ theme }) => theme.color.elementsBackground};
-    padding: 16px 24px;
+    min-height: 80px;
+    `;
 
+export const Wrapper = styled.div`
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    max-width: ${({ theme }) => theme.breakpoint.xxl};
+    
     @media (max-width: ${({ theme }) => theme.breakpoint.sm}) {
         flex-direction: column;
     }

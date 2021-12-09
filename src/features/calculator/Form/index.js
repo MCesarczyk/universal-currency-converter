@@ -9,19 +9,19 @@ import { Select } from "../../../common/Select";
 import { Input } from "./Input";
 import { labelsEnglish, labelsPolish } from "../currenciesLabels";
 import { useLocalStorageState } from "../../../utils/useLocalStorageState";
+import { TextField } from "../../../common/TextField";
 
 const Form = ({
   languages,
   language,
-  headerTitle,
-  inputLabel,
-  listTitle,
+  currentTitle,
+  targetTitle,
   resultTitle,
-  resultLabel
+  dateLabel
 }) => {
   const CURRENT_CURRENCY_DEFAULT = "EUR";
   const TARGET_CURRENCY_DEFAULT = "PLN";
-  const LOADING_DELAY = 500;
+  const LOADING_DELAY = 1_000;
 
   const [ratesData, setRatesData] = useState(null);
   const [newAmount, setNewAmount] = useState("");
@@ -108,17 +108,14 @@ const Form = ({
     setNewAmount("");
     setResult("");
     setCheckingDate("");
-    setCurrentCurrency(CURRENT_CURRENCY_DEFAULT);
-    setTargetCurrency(TARGET_CURRENCY_DEFAULT);
   };
 
   return (
     <form onSubmit={onFormSubmit} onReset={onFormReset}>
       <Fieldset
-        title={headerTitle}
+        title={currentTitle}
       >
         <ContentWrapper>
-          <Label text={inputLabel} />
           <Input
             value={newAmount}
             placeholder={languages[language].inputPlaceholder + currentCurrency}
@@ -147,8 +144,9 @@ const Form = ({
           </Select>
         </ContentWrapper>
       </Fieldset>
+
       <Fieldset
-        title={listTitle}
+        title={targetTitle}
       >
         <ContentWrapper vertical>
 
@@ -161,33 +159,28 @@ const Form = ({
           }
 
           {success === true &&
-            <ContentWrapper>
-              <Label text={languages[language].targetCurrencyLabel} />
-              <Select name="targetCurrency" value={targetCurrency} onChange={onTargetCurrencyChange}>
-                {filteredRates && Object.keys(filteredRates).map((key, value) => (
-                  <option key={key} value={key}>
-                    {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
-                    {" - "}
-                    {key}
-                    {" - "}
-                    {Object.values(currenciesLabels)[Object.keys(currenciesLabels).indexOf(key)]}
-                  </option>
-                ))}
-              </Select>
-            </ContentWrapper>
+            <Select name="targetCurrency" value={targetCurrency} onChange={onTargetCurrencyChange}>
+              {filteredRates && Object.keys(filteredRates).map((key, value) => (
+                <option key={key} value={key}>
+                  {(1 / (Object.values(filteredRates)[value])).toFixed(4)}
+                  {" - "}
+                  {key}
+                  {" - "}
+                  {Object.values(currenciesLabels)[Object.keys(currenciesLabels).indexOf(key)]}
+                </option>
+              ))}
+            </Select>
           }
 
         </ContentWrapper>
       </Fieldset>
+
       <Fieldset
         title={resultTitle}
       >
-        <ContentWrapper>
-          <Label text={resultLabel} />
-          <div>
-            {result}
-          </div>
-        </ContentWrapper>
+        <TextField>
+          {result}
+        </TextField>
         <Annotation text={checkingDate} />
         <Buttons
           languages={languages}

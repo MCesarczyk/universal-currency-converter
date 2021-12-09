@@ -1,12 +1,11 @@
 const languages = {
   EN: {
     headerTitle: "Currency converter",
-    inputLabel: "You give:",
+    currentTitle: "Current currency",
     inputPlaceholder: "Amount in ",
     targetCurrencyLabel: "Chosen currency:",
-    listTitle: "Currency selection",
+    targetTitle: "Chosen currency",
     resultTitle: "Calculated amount",
-    resultLabel: "You get: ",
     clockLabel: "Today is ",
     loadingMessage: "Loading... please wait",
     errorMessage: "Unable to fetch data...\n" +
@@ -16,13 +15,12 @@ const languages = {
     dateLabel: "*rate valid on: "
   },
   PL: {
-    headerTitle: "e-Kantor",
-    inputLabel: "Wpłacasz:",
+    headerTitle: "Przelicznik walut",
+    currentTitle: "Bieżąca waluta",
     inputPlaceholder: "Kwota w ",
     targetCurrencyLabel: "Wybrana waluta:",
-    listTitle: "Wybór waluty",
+    targetTitle: "Wybrana waluta",
     resultTitle: "Otrzymana kwota",
-    resultLabel: "Dostajesz: ",
     clockLabel: "Dzisiaj jest ",
     loadingMessage: "Pobieranie danych...",
     errorMessage: "Nie udało się pobrać danych...\n" +

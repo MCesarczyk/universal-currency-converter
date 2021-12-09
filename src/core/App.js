@@ -21,9 +21,9 @@ const App = () => {
         <Form
           languages={languages}
           language={language}
-          headerTitle={languages[language].headerTitle}
+          currentTitle={languages[language].currentTitle}
           inputLabel={languages[language].inputLabel}
-          listTitle={languages[language].listTitle}
+          targetTitle={languages[language].targetTitle}
           resultTitle={languages[language].resultTitle}
           resultLabel={languages[language].resultLabel}
         />
