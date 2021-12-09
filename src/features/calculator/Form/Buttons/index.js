@@ -1,8 +1,11 @@
-import { ButtonsContainer, Button } from "./styled";
+import { ButtonsContainer } from "./styled";
+import { Button } from "../../../../common/Button";
 
-const Buttons = ({ languages, language }) => (
+const Buttons = ({ languages, language, onButtonClick }) => (
     <ButtonsContainer>
-        <Button>
+        <Button
+            onClick={onButtonClick}
+        >
             {languages[language].mainButtonLabel}
         </Button>
         <Button reset type="reset">

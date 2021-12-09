@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import background from "./assets/images/background.png";
 
 export const GlobalStyle = createGlobalStyle`
 
@@ -16,10 +17,15 @@ html {
 }
 
 body {
+  background-image: url("${background}");
+  background-size: contain;
+  background-position: center;
+  background-attachment: scroll;
+  background-color: ${({ theme }) => theme.color.background};
   font-family: 'Ubuntu', sans-serif;
   background-color: ${({ theme }) => theme.color.background};
-  max-width: ${({ theme }) => theme.breakpoint.xl};
   height: 100%;
   margin: 0 auto;
   min-width: 300px;
+  overflow-y: hidden;
 }`;

@@ -1,33 +1,31 @@
 const languages = {
   EN: {
     headerTitle: "Currency converter",
-    inputLabel: "You give:",
+    currentTitle: "Current currency",
     inputPlaceholder: "Amount in ",
-    wantedCurrencyLabel: "Chosen currency:",
-    listTitle: "Currency selection",
+    targetCurrencyLabel: "Chosen currency:",
+    targetTitle: "Chosen currency",
     resultTitle: "Calculated amount",
-    resultLabel: "You get: ",
     clockLabel: "Today is ",
     loadingMessage: "Loading... please wait",
     errorMessage: "Unable to fetch data...\n" +
     "please check your internet connection.",
-    mainButtonLabel: "Calculate",
-    resetButtonLabel: "Reset",
+    mainButtonLabel: "Switch currencies",
+    resetButtonLabel: "Clear",
     dateLabel: "*rate valid on: "
   },
   PL: {
-    headerTitle: "e-Kantor",
-    inputLabel: "Wpłacasz:",
+    headerTitle: "Przelicznik walut",
+    currentTitle: "Bieżąca waluta",
     inputPlaceholder: "Kwota w ",
-    wantedCurrencyLabel: "Wybrana waluta:",
-    listTitle: "Wybór waluty",
+    targetCurrencyLabel: "Wybrana waluta:",
+    targetTitle: "Wybrana waluta",
     resultTitle: "Otrzymana kwota",
-    resultLabel: "Dostajesz: ",
     clockLabel: "Dzisiaj jest ",
     loadingMessage: "Pobieranie danych...",
     errorMessage: "Nie udało się pobrać danych...\n" +
     "sprawdź swoje połączenie internetowe",
-    mainButtonLabel: "Przelicz",
+    mainButtonLabel: "Przełącz waluty",
     resetButtonLabel: "Wyczyść",
     dateLabel: "*wg kursu z dnia: "
   }

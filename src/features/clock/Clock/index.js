@@ -1,5 +1,5 @@
-import { useCurrentDate } from "./useCurrentDate";
-import { ClockContainer, ClockElement } from "./styled";
+import { useCurrentDate } from "../useCurrentDate";
+import { ClockContainer, ClockElement, ClockLabel } from "./styled";
 
 const Clock = ({ languages, language }) => {
     const date = useCurrentDate();
@@ -7,10 +7,15 @@ const Clock = ({ languages, language }) => {
     return (
         <ClockContainer>
             <ClockElement>
-                {languages[language].clockLabel}
-                {" "}
+                <ClockLabel>
+                    {languages[language].clockLabel}
+                    {" "}
+                    {date.toLocaleString(language, {
+                        weekday: "long",
+                    })}
+                </ClockLabel>
                 {date.toLocaleString(language, {
-                    weekday: "long",
+                    // weekday: "long",
                     day: "numeric",
                     month: "long",
                     hour: "2-digit",

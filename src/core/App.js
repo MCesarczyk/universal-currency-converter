@@ -1,8 +1,8 @@
 import Container from "./Container";
-import Form from "./Form";
-import Switcher from "./Switcher";
-import languages from "./languages";
-import { useLocalStorageState } from "./useLocalStorageState";
+import Form from "../features/calculator/Form";
+import languages from "../features/languages/languages";
+import { useLocalStorageState } from "../utils/useLocalStorageState";
+import TitleBeam from "./TitleBeam";
 
 const App = () => {
   const [language, setLanguage] = useLocalStorageState("language", "EN");
@@ -10,22 +10,25 @@ const App = () => {
   document.title = languages[language].headerTitle;
 
   return (
-    <Container>
-      <Switcher
+    <>
+      <TitleBeam
         languages={languages}
         language={language}
         setLanguage={setLanguage}
+        title={languages[language].headerTitle}
       />
-      <Form
-        languages={languages}
-        language={language}
-        headerTitle={languages[language].headerTitle}
-        inputLabel={languages[language].inputLabel}
-        listTitle={languages[language].listTitle}
-        resultTitle={languages[language].resultTitle}
-        resultLabel={languages[language].resultLabel}
-      />
-    </Container>
+      <Container>
+        <Form
+          languages={languages}
+          language={language}
+          currentTitle={languages[language].currentTitle}
+          inputLabel={languages[language].inputLabel}
+          targetTitle={languages[language].targetTitle}
+          resultTitle={languages[language].resultTitle}
+          resultLabel={languages[language].resultLabel}
+        />
+      </Container>
+    </>
   );
 }
 

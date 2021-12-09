@@ -1,15 +1,5 @@
 import styled from "styled-components";
 
-export const ButtonsContainer = styled.div`
-    display: flex;
-    justify-content: center;
-
-    @media (max-width: ${({ theme }) => theme.breakpoint.xs}) {
-            flex-direction: column;
-            align-items: center;
-    }
-`;
-
 export const Button = styled.button`
     color: ${({ theme }) => theme.color.elementsText};
     background-color: ${({ theme }) => props => props.reset ? theme.color.crimson : theme.color.emerald};
