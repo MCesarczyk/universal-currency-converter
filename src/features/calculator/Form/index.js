@@ -130,8 +130,6 @@ const Form = ({
             type="number"
             min="0.01"
             step="any"
-            required
-            autoFocus
             onChange={({ target }) => setNewAmount(target.value)}
             minLength={0}
             debounceTimeout={LOADING_DELAY}
