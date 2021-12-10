@@ -1,4 +1,6 @@
-import { LanguageButtons } from "./styled";
+import { Button, LanguageButtons } from "./styled";
+import flagPL from "../../../assets/images/flagPL.png";
+import flagEN from "../../../assets/images/flagUS.png";
 
 const Switcher = ({ languages, setLanguage }) => {
 
@@ -8,14 +10,14 @@ const Switcher = ({ languages, setLanguage }) => {
 
     return (
         <LanguageButtons>
-            {Object.keys(languages).map((key) => (
-                <button
-                    key={key}
-                    value={key}
+            {Object.keys(languages).map((lang) => (
+                <Button
+                    key={lang}
+                    value={lang}
                     onClick={onLanguageChange}
+                    style={{ backgroundImage: `url(${lang === 'PL' ? flagPL : flagEN})`, width: "32px", height: "24px" }}
                 >
-                    {key}
-                </button>
+                </Button>
             ))}
         </LanguageButtons>
     )
