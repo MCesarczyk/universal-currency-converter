@@ -1,10 +1,13 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const StyledBeam = styled.header`
     width: 100%;
     color: ${({ theme }) => theme.color.elementsText};
     background-color: ${({ theme }) => theme.color.elementsBackground};
     min-height: 80px;
+    `;
+
+export const Wrapper = styled.div`
     margin: 0 auto;
     display: flex;
     justify-content: space-between;

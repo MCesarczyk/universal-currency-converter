@@ -1,9 +1,10 @@
 import Clock from "../../features/clock/Clock";
 import Switcher from "../../features/languages/Switcher";
 import { Title } from "../../common/Title";
-import { ExtraWrapper, Wrapper } from "./styled";
+import { ExtraWrapper, StyledBeam, Wrapper } from "./styled";
 
 const TitleBeam = ({ title, languages, language, setLanguage }) => (
+    <StyledBeam>
         <Wrapper>
             <Title>
                 {title}
@@ -20,6 +21,7 @@ const TitleBeam = ({ title, languages, language, setLanguage }) => (
                 />
             </ExtraWrapper>
         </Wrapper>
+    </StyledBeam>
 );
 
 export default TitleBeam;
