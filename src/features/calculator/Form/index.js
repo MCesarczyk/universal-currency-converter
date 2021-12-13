@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
+import { useLocalStorageState } from "../../../utils/useLocalStorageState";
 import { getCurrentRates } from "../getCurrentRates";
+import { labelsEnglish, labelsPolish } from "../currenciesLabels";
+import Annotation from "../../../common/Annotation";
 import Buttons from "./Buttons";
-import { ContentWrapper } from "../../../common/ContentWrapper";
 import Fieldset from "../../../common/Fieldset";
 import Label from "../../../common/Label";
-import Annotation from "../../../common/Annotation";
-import { Select } from "../../../common/Select";
+import { ContentWrapper } from "../../../common/ContentWrapper";
 import { Input } from "./Input";
-import { labelsEnglish, labelsPolish } from "../currenciesLabels";
-import { useLocalStorageState } from "../../../utils/useLocalStorageState";
+import { Select } from "../../../common/Select";
+import { StyledForm } from "./styled";
 import { TextField } from "../../../common/TextField";
 
 const Form = ({
@@ -16,8 +17,7 @@ const Form = ({
   language,
   currentTitle,
   targetTitle,
-  resultTitle,
-  dateLabel
+  resultTitle
 }) => {
   const CURRENT_CURRENCY_DEFAULT = "EUR";
   const TARGET_CURRENCY_DEFAULT = "PLN";
@@ -119,7 +119,7 @@ const Form = ({
   };
 
   return (
-    <form onSubmit={onFormSubmit} onReset={onFormReset}>
+    <StyledForm onSubmit={onFormSubmit} onReset={onFormReset}>
       <Fieldset
         title={currentTitle}
       >
@@ -194,7 +194,7 @@ const Form = ({
           onButtonClick={switchValues}
         />
       </Fieldset>
-    </form>
+    </StyledForm>
   )
 }
 
