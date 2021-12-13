@@ -28,5 +28,6 @@ export const ExtraWrapper = styled.div`
 
     @media (max-width: ${({ theme }) => theme.breakpoint.sm}) {
         flex-direction: row;
+        margin-bottom: 16px;
     }
 `;
