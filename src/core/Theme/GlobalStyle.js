@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import background from "./assets/images/background.png";
+import background from "../../assets/images/background.png";
 
 export const GlobalStyle = createGlobalStyle`
 
@@ -27,5 +27,5 @@ body {
   height: 100%;
   margin: 0 auto;
   min-width: 300px;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
 }`;

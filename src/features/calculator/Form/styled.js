@@ -1,15 +1,6 @@
 import styled from "styled-components";
 
-export const ContainerWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent;
-    margin: 0 auto;
-    height: 100%;
-`;
-
-export const ContainerElement = styled.div`
+export const StyledForm = styled.form`
     margin: auto;
     padding: 12px 24px;
     border-radius: 24px;

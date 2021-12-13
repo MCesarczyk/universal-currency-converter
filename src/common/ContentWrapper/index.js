@@ -5,11 +5,10 @@ export const ContentWrapper = styled.label.attrs(props => ({
     direction: props.vertical ? "column" : "row",
 }))`
     display: flex;
-    justify-content: space-between;
     flex-direction: ${props => props.direction};
-    gap: 10px;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+    gap: 10px;
     width: 100%;
 
     @media (max-width: ${({ theme }) => theme.breakpoint.sm}) {
