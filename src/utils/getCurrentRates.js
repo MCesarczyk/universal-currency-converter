@@ -1,4 +1,4 @@
-import { buildRequestUrl } from "../../utils/buildRequestUrl";
+import { buildRequestUrl } from "./buildRequestUrl";
 
 export const getCurrentRates = async (currencyBase, checkingDate) => {
   const apiUrl = buildRequestUrl(currencyBase, checkingDate);

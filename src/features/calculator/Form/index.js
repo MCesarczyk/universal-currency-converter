@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocalStorageState } from "../../../utils/useLocalStorageState";
-import { getCurrentRates } from "../getCurrentRates";
-import { labelsEnglish, labelsPolish } from "../currenciesLabels";
+import { getCurrentRates } from "../../../utils/getCurrentRates";
+import { labelsEnglish, labelsPolish } from "../../../assets/data/currenciesLabels";
 import Annotation from "../../../common/Annotation";
 import Buttons from "./Buttons";
 import Fieldset from "../../../common/Fieldset";

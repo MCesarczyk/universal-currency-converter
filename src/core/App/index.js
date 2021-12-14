@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocalStorageState } from "../../utils/useLocalStorageState";
 import { clearCacheData } from "../../utils/clearCacheData";
-import languages from "../../features/languages/languages";
+import languages from "../../assets/data/languages";
 import StyledForm from "../../features/calculator/Form";
 import TitleBeam from "../TitleBeam";
 import { Wrapper } from "../../common/Wrapper";
