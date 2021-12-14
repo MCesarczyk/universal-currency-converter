@@ -30,6 +30,10 @@ const Form = ({
   const [result, setResult] = useState([]);
   const [checkingDate, setCheckingDate] = useState("");
 
+  const date = ratesData?.date;
+  const rates = ratesData?.rates;
+  const success = ratesData?.success;
+
   useEffect(() => {
     setCheckingDate(
       newAmount > 0 && date !== undefined
@@ -37,10 +41,6 @@ const Form = ({
         : ''
     )
   }, [ratesData]);
-
-  const date = ratesData?.date;
-  const rates = ratesData?.rates;
-  const success = ratesData?.success;
 
   const currenciesLabels = language === "PL" ? labelsPolish : labelsEnglish;
 
@@ -106,9 +106,6 @@ const Form = ({
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-
-    calculateResult();
-    setCheckingDate(`${languages[language].dateLabel}${date}`);
   };
 
   const onFormReset = (event) => {
