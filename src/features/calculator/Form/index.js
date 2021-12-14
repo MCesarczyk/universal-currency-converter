@@ -91,8 +91,10 @@ const Form = ({
     );
   };
 
+  const currentDate = new Date(Date.now()).toISOString().substring(0,10);
+  
   const exchangeMoney = () => {
-    getCurrentRates(currentCurrency)
+    getCurrentRates(currentCurrency, currentDate)
       .then(data => setRatesData(data))
       .then(() => calculateResult())
   };
