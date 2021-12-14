@@ -1,6 +1,7 @@
-export const getCurrentRates = async (currencyBase) => {
-  const baseURL = 'https://api.exchangerate.host/latest';
-  const apiUrl = baseURL + "?base=" + currencyBase || 'EUR';
+import { buildRequestUrl } from "../../utils/buildRequestUrl";
+
+export const getCurrentRates = async (currencyBase, checkingDate) => {
+  const apiUrl = buildRequestUrl(currencyBase, checkingDate);
 
   try {
     const response = await fetch(apiUrl, { mode: 'cors' });
