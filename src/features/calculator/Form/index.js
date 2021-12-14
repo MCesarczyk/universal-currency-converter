@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocalStorageState } from "../../../utils/useLocalStorageState";
-import { getCurrentRates } from "../getCurrentRates";
-import { labelsEnglish, labelsPolish } from "../currenciesLabels";
+import { getCurrentRates } from "../../../utils/getCurrentRates";
+import { labelsEnglish, labelsPolish } from "../../../assets/data/currenciesLabels";
 import Annotation from "../../../common/Annotation";
 import Buttons from "./Buttons";
 import Fieldset from "../../../common/Fieldset";
@@ -33,6 +33,14 @@ const Form = ({
   const date = ratesData?.date;
   const rates = ratesData?.rates;
   const success = ratesData?.success;
+
+  useEffect(() => {
+    setCheckingDate(
+      newAmount > 0 && date !== undefined
+        ? `${languages[language].dateLabel}${date}`
+        : ''
+    )
+  }, [ratesData]);
 
   const currenciesLabels = language === "PL" ? labelsPolish : labelsEnglish;
 
@@ -83,17 +91,12 @@ const Form = ({
     );
   };
 
+  const currentDate = new Date(Date.now()).toISOString().substring(0,10);
+  
   const exchangeMoney = () => {
-    getCurrentRates(currentCurrency)
+    getCurrentRates(currentCurrency, currentDate)
       .then(data => setRatesData(data))
       .then(() => calculateResult())
-      .then(
-        setCheckingDate(
-          newAmount > 0 && date !== undefined
-            ? `${languages[language].dateLabel}${date}`
-            : ''
-        )
-      )
   };
 
   useEffect(() => {
@@ -105,9 +108,6 @@ const Form = ({
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-
-    calculateResult();
-    setCheckingDate(`${languages[language].dateLabel}${date}`);
   };
 
   const onFormReset = (event) => {
