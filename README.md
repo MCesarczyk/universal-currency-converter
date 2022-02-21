@@ -3,11 +3,11 @@ It was possible thanks to debounce functionality, so now the result is calculati
 
 ![picking currencies](src/assets/images/picking_currencies.gif)
 
-Using this converter on everyday basis, inability of quick currencies switch bothered me the most 😫 ... so here it is! 🎉
+Using this converter on everyday basis, inability of quick currencies switch bothered me the most 😫 ...\  so here it is! 🎉
 
 ![switching currencies](src/assets/images/switching_currencies.gif)
 
-Obviously, language switcher is also onboard, now it got look refreshment with english and polish language flags on buttons. 👩👳🏿‍♂️👦🏻🧔🏾👩🏿
+Obviously, language switcher is also onboard,\ now it got look refreshment with english and polish language flags on buttons. 👩🏿👦🏻🧔🏾👩👳🏿‍♂️
 
 ![changing UI language](src/assets/images/changing_language.gif)
 ***
