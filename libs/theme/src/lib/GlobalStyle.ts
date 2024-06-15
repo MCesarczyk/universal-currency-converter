@@ -1,7 +1,13 @@
-import { createGlobalStyle } from "styled-components";
-import background from "../../assets/images/background.png";
+import { DefaultTheme, createGlobalStyle } from "styled-components";
+import background from "./background.png";
 
-export const GlobalStyle = createGlobalStyle`
+interface CustomTheme extends DefaultTheme {
+  color: {
+    background: string;
+  }
+}
+
+export const GlobalStyle = createGlobalStyle<{theme: CustomTheme}>`
 
 html {
   box-sizing: border-box;
@@ -27,5 +33,4 @@ body {
   height: 100%;
   margin: 0 auto;
   min-width: 300px;
-  /* overflow-y: hidden; */
 }`;

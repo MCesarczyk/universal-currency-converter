@@ -1,9 +1,10 @@
 {
-  "name": "universal-currency-converter",
+  "name": "@ucc/source",
   "version": "0.1.0",
   "private": true,
   "homepage": "https://mcesarczyk.github.io/universal-currency-converter/",
   "dependencies": {
+    "@storybook/addon-themes": "^8.1.9",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "15.0.6",
     "@testing-library/user-event": "^12.8.3",

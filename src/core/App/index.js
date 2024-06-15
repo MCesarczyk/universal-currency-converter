@@ -5,7 +5,7 @@ import languages from "../../assets/data/languages";
 import StyledForm from "../../features/calculator/Form";
 import TitleBeam from "../TitleBeam";
 import { Wrapper } from "../../common/Wrapper";
-import Theme from "../Theme";
+import Theme from "../../../apps/spa/src/theme";
 
 const App = () => {
   const [language, setLanguage] = useLocalStorageState("language", "EN");

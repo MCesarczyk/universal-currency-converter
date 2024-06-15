@@ -1,6 +1,6 @@
 import Clock from "../../features/clock/Clock";
 import Switcher from "../../features/languages/Switcher";
-import { Title } from "../../common/Title";
+import { Title } from "../../../libs/ui/src/lib/atoms/Title/Title";
 import { ExtraWrapper, StyledBeam, Wrapper } from "./styled";
 
 const TitleBeam = ({ title, languages, language, setLanguage }) => (
