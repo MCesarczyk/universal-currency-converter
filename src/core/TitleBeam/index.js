@@ -1,5 +1,5 @@
 import Clock from "../../features/clock/Clock";
-import Switcher from "../../features/languages/Switcher";
+import Switcher from "../../../libs/ui/src/lib/molecules/LanguageSwitcher/LanguageSwitcher";
 import { Title } from "../../../libs/ui/src/lib/atoms/Title/Title";
 import { ExtraWrapper, StyledBeam, Wrapper } from "./styled";
 

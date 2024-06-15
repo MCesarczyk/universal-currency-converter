@@ -20,7 +20,7 @@ export const FormButtons = ({ mainButtonLabel, resetButtonLabel, onButtonClick }
     </ButtonsContainer>
 );
 
-export const ButtonsContainer = styled.div`
+const ButtonsContainer = styled.div`
     display: flex;
     justify-content: center;
 

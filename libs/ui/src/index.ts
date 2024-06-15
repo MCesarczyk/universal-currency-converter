@@ -6,3 +6,6 @@ export { Label } from './lib/atoms/Label';
 export { Select } from './lib/atoms/Select';
 export { TextField } from './lib/atoms/TextField';
 export { Title } from './lib/atoms/Title';
+
+export { FormButtons } from './lib/molecules/FormButtons';
+export { LanguageSwitcher } from './lib/molecules/LanguageSwitcher';
