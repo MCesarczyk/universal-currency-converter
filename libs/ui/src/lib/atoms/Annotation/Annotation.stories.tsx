@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Title } from './Title';
+import { Annotation } from './Annotation';
 
-const meta: Meta<typeof Title> = {
-  component: Title,
-  title: 'Atoms/Title',
+const meta: Meta<typeof Annotation> = {
+  component: Annotation,
+  title: 'Atoms/Annotation',
   parameters: {
     layout: 'centered',
     controls: { hideNoControlsWarning: true, sort: 'requiredFirst' },
   },
   argTypes: {
-    children: {
+    text: {
       control: {
         type: 'text',
       },
@@ -18,9 +18,9 @@ const meta: Meta<typeof Title> = {
 };
 export default meta;
 
-type Story = StoryObj<typeof Title>;
-export const _Title: Story = {
+type Story = StoryObj<typeof Annotation>;
+export const _Annotation: Story = {
   args: {
-    children: 'Title',
+    text: 'Annotation',
   },
 };
