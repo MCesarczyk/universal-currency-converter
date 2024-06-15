@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Button = styled.button`
+export const Button = styled.button<{reset?: boolean}>`
     color: ${({ theme }) => theme.color.elementsText};
     background-color: ${({ theme }) => props => props.reset ? theme.color.crimson : theme.color.emerald};
     border: none;
@@ -8,7 +8,6 @@ export const Button = styled.button`
     border-radius: 20px;
     padding: 8px 16px;
     margin: 5px 10px;
-    width: 45%;
 
     @media (max-width: ${({ theme }) => theme.breakpoint.xs}) {
         width: 100%;

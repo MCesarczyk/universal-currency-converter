@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Title } from './Title';
+import { Button } from './Button';
 
-const meta: Meta<typeof Title> = {
-  component: Title,
-  title: 'Atoms/Title',
+const meta: Meta<typeof Button> = {
+  component: Button,
+  title: 'Atoms/Button',
   parameters: {
     layout: 'centered',
     controls: { hideNoControlsWarning: true, sort: 'requiredFirst' },
@@ -14,22 +14,28 @@ const meta: Meta<typeof Title> = {
         type: 'text',
       },
     },
+    reset: {
+      control: {
+        type: 'boolean',
+      },
+    },
     as: {
-      control: false
+      control: false,
     },
     forwardedAs: {
-      control: false
+      control: false,
     },
     theme: {
-      control: false
+      control: false,
     },
   },
 };
 export default meta;
 
-type Story = StoryObj<typeof Title>;
-export const _Title: Story = {
+type Story = StoryObj<typeof Button>;
+export const _Button: Story = {
   args: {
-    children: 'Title',
+    children: 'Button',
+    reset: false,
   },
 };
