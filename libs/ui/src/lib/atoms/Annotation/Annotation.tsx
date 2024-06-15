@@ -7,7 +7,7 @@ export const Annotation = ({ text }: AnnotationProps) => (
   <StyledAnnotation>{text}</StyledAnnotation>
 );
 
-export const StyledAnnotation = styled.p`
+const StyledAnnotation = styled.p`
   font-size: 12px;
   text-align: right;
   min-height: 13px;

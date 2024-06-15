@@ -1,6 +1,19 @@
+import { ReactNode } from "react";
 import styled from "styled-components";
 
-export const StyledFieldset = styled.fieldset`
+interface FieldsetProps {
+    title: string;
+    children: ReactNode;
+}
+
+export const Fieldset = ({ title, children }:FieldsetProps) => (
+    <StyledFieldset>
+        <Legend>{title}</Legend>
+        {children}
+    </StyledFieldset>
+);
+
+const StyledFieldset = styled.fieldset`
     min-height: 100px;
     border-radius: 20px;
     padding: 16px 32px;
@@ -8,7 +21,7 @@ export const StyledFieldset = styled.fieldset`
     min-height: 128px;
 `;
 
-export const Legend = styled.legend`
+const Legend = styled.legend`
     color: ${({ theme }) => theme.color.elementsText};
     background-color: ${({ theme }) => theme.color.elementsBackground};
     padding: 8px 24px;

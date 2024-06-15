@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const ContentWrapper = styled.label.attrs(props => ({
+interface ContentWrapperProps {
+    vertical?: boolean;
+}
+
+export const ContentWrapper = styled.label.attrs((props: ContentWrapperProps) => ({
     type: "text",
     direction: props.vertical ? "column" : "row",
 }))`
