@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import styled from "styled-components";
 import { useLocalStorageState } from "../../utils/useLocalStorageState";
 import { clearCacheData } from "../../utils/clearCacheData";
 import languages from "../../assets/data/languages";
@@ -42,3 +43,9 @@ const App = () => {
 }
 
 export default App;
+
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+`;
