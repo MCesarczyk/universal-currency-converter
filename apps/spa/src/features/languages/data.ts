@@ -1,5 +1,8 @@
-const languages = {
+import { Languages } from "./types";
+
+export const languages: Languages = {
   EN: {
+    flag: "🇬🇧",
     headerTitle: "Currency converter",
     currentTitle: "Current currency",
     inputPlaceholder: "Amount in ",
@@ -15,6 +18,7 @@ const languages = {
     dateLabel: "*rate valid on: "
   },
   PL: {
+    flag: "🇵🇱",
     headerTitle: "Przelicznik walut",
     currentTitle: "Bieżąca waluta",
     inputPlaceholder: "Kwota w ",
@@ -30,5 +34,3 @@ const languages = {
     dateLabel: "*wg kursu z dnia: "
   }
 };
-
-export default languages;

@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import { useLocalStorageState } from "../../utils/useLocalStorageState";
 import { clearCacheData } from "../../utils/clearCacheData";
-import languages from "../../assets/data/languages";
+import languages from "../../../apps/spa/src/features/languages/data";
 import StyledForm from "../../features/calculator/Form";
-import TitleBeam from "../TitleBeam";
+import TitleBeam from "../../../apps/spa/src/components/TitleBeam/TitleBeam";
 import { Wrapper } from "../../common/Wrapper";
 import Theme from "../../../apps/spa/src/theme";
 

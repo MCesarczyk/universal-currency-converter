@@ -7,5 +7,5 @@ export { Select } from './lib/atoms/Select';
 export { TextField } from './lib/atoms/TextField';
 export { Title } from './lib/atoms/Title';
 
+export { Clock } from './lib/molecules/Clock';
 export { FormButtons } from './lib/molecules/FormButtons';
-export { LanguageSwitcher } from './lib/molecules/LanguageSwitcher';
