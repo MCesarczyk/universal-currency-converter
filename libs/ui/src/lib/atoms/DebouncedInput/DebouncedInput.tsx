@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, ComponentProps, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 interface DebouncedInputProps {
@@ -11,7 +11,7 @@ export const DebouncedInput = ({
   onChange,
   delay = 500,
   placeholder,
-}: DebouncedInputProps) => {
+}: ComponentProps<typeof Input> & DebouncedInputProps) => {
   const [inputValue, setInputValue] = useState('');
   const [debouncedInputValue, setDebouncedInputValue] = useState('');
 

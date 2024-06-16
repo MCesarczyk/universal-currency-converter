@@ -1,4 +1,6 @@
-export const labelsEnglish = {
+import { CurrencyLabels } from "./types";
+
+export const labelsEnglish: CurrencyLabels = {
     AUD: "Australian Dollar",
     BGN: "Bulgarian Lev",
     BRL: "Brazilian real",
@@ -37,7 +39,7 @@ export const labelsEnglish = {
     ZAR: "South African rand",
 };
 
-export const labelsPolish = {
+export const labelsPolish: CurrencyLabels = {
     AUD: "Dolar australijski",
     BGN: "Lew bułgarski",
     BRL: "Real brazylijski",

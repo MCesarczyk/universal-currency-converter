@@ -1,6 +1,6 @@
 import { buildRequestUrl } from "./buildRequestUrl";
 
-export const getCurrentRates = async (currencyBase, checkingDate) => {
+export const getCurrentRates = async (currencyBase: string, checkingDate: string) => {
   const apiUrl = buildRequestUrl(currencyBase, checkingDate);
 
   try {
@@ -12,8 +12,11 @@ export const getCurrentRates = async (currencyBase, checkingDate) => {
 
     return await response.json();
 
-  } catch (error) {
-    console.error(error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+
     return { success: false };
   }
 };

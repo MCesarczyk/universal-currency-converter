@@ -1,4 +1,6 @@
-const currencies = [
+import { Currency } from "./types";
+
+export const currencies: Currency[] = [
     {
         id: "EUR",
         label: {
@@ -50,5 +52,3 @@ const currencies = [
         }
     }
 ];
-
-export default currencies;

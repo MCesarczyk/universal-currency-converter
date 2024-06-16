@@ -1,4 +1,4 @@
-export const buildRequestUrl = (currencyBase, checkingDate) => {
+export const buildRequestUrl = (currencyBase: string, checkingDate: string) => {
     const apiBaseUrl = 'https://api.exchangerate.host/latest';
     const apiCurrencyParam = '?base=';
     const apiCurrencyBase = currencyBase || 'EUR';

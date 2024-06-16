@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import styled from "styled-components";
-import { useLocalStorageState } from "../../utils/useLocalStorageState";
-import { clearCacheData } from "../../utils/clearCacheData";
+import { useLocalStorageState } from "../../../apps/spa/src/utils/useLocalStorageState";
+import { clearCacheData } from "../../../apps/spa/src/utils/clearCacheData";
 import languages from "../../../apps/spa/src/features/languages/data";
 import StyledForm from "../../features/calculator/Form";
 import TitleBeam from "../../../apps/spa/src/components/TitleBeam/TitleBeam";

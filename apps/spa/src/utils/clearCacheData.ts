@@ -4,5 +4,6 @@ export const clearCacheData = () => {
             caches.delete(name);
         });
     });
+
     console.log('Complete Cache Cleared')
 };
