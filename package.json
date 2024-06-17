@@ -87,6 +87,7 @@
     "jest": "^29.4.1",
     "jest-environment-jsdom": "^29.4.1",
     "jsdom": "~22.1.0",
+    "msw": "^2.3.1",
     "nx": "19.3.0",
     "prettier": "^2.6.2",
     "storybook": "^8.1.9",
@@ -102,5 +103,10 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "msw": {
+    "workerDirectory": [
+      "apps/spa/public"
+    ]
   }
 }

@@ -10,11 +10,11 @@ import {
   Select,
   TextField,
 } from '@ui';
-import { getCurrentRates } from '../../utils/getCurrentRates';
+import { useCurrentRates } from '../../features/rates/useCurrentRates';
 import { useLocalStorageState } from '../../utils/useLocalStorageState';
 import { labelsEnglish, labelsPolish } from '../../features/currencies/labels';
 import { LanguageKeys, Languages } from '../../features/languages/types';
-import { Rate, RatesData } from '../../features/rates/types';
+import { RateDto } from '../../features/rates/types';
 
 interface FormProps {
   languages: Languages;
@@ -26,7 +26,6 @@ export const Form = ({ languages, language }: FormProps) => {
   const TARGET_CURRENCY_DEFAULT = 'PLN';
   const LOADING_DELAY = 500;
 
-  const [ratesData, setRatesData] = useState<RatesData | null>(null);
   const [newAmount, setNewAmount] = useState<number | undefined>();
   const [currentCurrency, setCurrentCurrency] = useLocalStorageState(
     'currentCurrency',
@@ -37,19 +36,13 @@ export const Form = ({ languages, language }: FormProps) => {
     TARGET_CURRENCY_DEFAULT
   );
   const [result, setResult] = useState<[string, string, string] | undefined>();
-  const [checkingDate, setCheckingDate] = useState<string | undefined>();
 
-  const date = ratesData?.date;
-  const rates = ratesData?.rates;
-  const success = ratesData?.success;
+  const { getCurrentRates, ratesData } = useCurrentRates();
 
-  useEffect(() => {
-    newAmount && setCheckingDate(
-      newAmount > 0 && date !== undefined
-        ? `${languages[language].dateLabel}${date}`
-        : ''
-    );
-  }, [ratesData]); // eslint-disable-line react-hooks/exhaustive-deps
+  const date = ratesData.rates?.meta.last_updated_at;
+  const rates = ratesData.rates?.data;
+  const loading = 'loading' in ratesData;
+  const error = 'error' in ratesData;
 
   const currenciesLabels = language === 'PL' ? labelsPolish : labelsEnglish;
 
@@ -70,35 +63,28 @@ export const Form = ({ languages, language }: FormProps) => {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let filteredRates: Record<string, Rate> = {};
+  const filteredRates: RateDto[] = rates
+    ? Object.values(rates).filter((rate) =>
+        Object.keys(currenciesLabels).includes(rate.code)
+      )
+    : [];
 
-  const filterRatesObject = () => {
-    if (rates) {
-      filteredRates = Object.fromEntries(
-        Object.entries(rates).filter(([id]) =>
-          Object.keys(currenciesLabels).includes(id)
-        )
+  const getExchangeRate = () => {
+    if (filteredRates) {
+      const currentRate = filteredRates.find(
+        ({ code }) => code === currentCurrency
       );
+      const targetRate = filteredRates.find(
+        ({ code }) => code === targetCurrency
+      );
+
+      if (currentRate && targetRate) {
+        return currentRate.value / targetRate.value;
+      }
     }
   };
 
-  filterRatesObject();
-
-  // const getExchangeRate = () => {
-  //   if (filteredRates) {
-  //     return (
-  //       Object.values(filteredRates)[
-  //         Object.keys(filteredRates).findIndex((key) => key === currentCurrency)
-  //       ] /
-  //       Object.values(filteredRates)[
-  //         Object.keys(filteredRates).findIndex((key) => key === targetCurrency)
-  //       ]
-  //     );
-  //   }
-  // };
-
-  // const currentRate = getExchangeRate();
-  const currentRate = 4.25;
+  const currentRate = getExchangeRate();
 
   const calculateResult = () => {
     if (!currentRate || !newAmount) {
@@ -113,12 +99,12 @@ export const Form = ({ languages, language }: FormProps) => {
     );
   };
 
-  const currentDate = new Date(Date.now()).toISOString().substring(0, 10);
+  useEffect(() => {
+    calculateResult();
+  }, [rates, currentCurrency, targetCurrency]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const exchangeMoney = () => {
-    getCurrentRates(currentCurrency, currentDate)
-      .then((data) => setRatesData(data))
-      .then(() => calculateResult());
+    getCurrentRates(currentCurrency);
   };
 
   useEffect(() => {
@@ -126,7 +112,7 @@ export const Form = ({ languages, language }: FormProps) => {
       exchangeMoney();
     }, LOADING_DELAY);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newAmount, currentCurrency, targetCurrency]);
+  }, [newAmount, currentCurrency, targetCurrency, newAmount]);
 
   const onFormSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -137,7 +123,6 @@ export const Form = ({ languages, language }: FormProps) => {
 
     setNewAmount(undefined);
     setResult(undefined);
-    setCheckingDate(undefined);
   };
 
   return (
@@ -179,34 +164,30 @@ export const Form = ({ languages, language }: FormProps) => {
 
       <Fieldset title={languages[language].targetTitle}>
         <ContentWrapper $vertical>
-          {success === undefined && (
-            <Label text={languages[language].loadingMessage} />
-          )}
+          {loading && <Label text={languages[language].loadingMessage} />}
 
-          {success === false && (
-            <Label text={languages[language].errorMessage} />
-          )}
+          {error && <Label text={languages[language].errorMessage} />}
 
-          {success === true && (
+          {rates && (
             <Select
               name="targetCurrency"
               value={targetCurrency}
               onChange={onTargetCurrencyChange}
             >
-              {/* {filteredRates &&
-                Object.keys(filteredRates).map((key, value) => (
-                  <option key={key} value={key}>
-                    {(1 / Object.values(filteredRates)[value]).toFixed(4)}
+              {filteredRates &&
+                filteredRates.map(({ code, value }) => (
+                  <option key={code} value={value}>
+                    {(1 / value).toFixed(4)}
                     {' - '}
-                    {key}
+                    {code}
                     {' - '}
                     {
                       Object.values(currenciesLabels)[
-                        Object.keys(currenciesLabels).indexOf(key)
+                        Object.keys(currenciesLabels).indexOf(code)
                       ]
                     }
                   </option>
-                ))} */}
+                ))}
             </Select>
           )}
         </ContentWrapper>
@@ -214,7 +195,9 @@ export const Form = ({ languages, language }: FormProps) => {
 
       <Fieldset title={languages[language].resultTitle}>
         <TextField>{result}</TextField>
-        {checkingDate && <Annotation text={checkingDate} />}
+        {date && result && (
+          <Annotation text={new Date(date).toLocaleDateString(language)} />
+        )}
         <FormButtons
           mainButtonLabel={languages[language].mainButtonLabel}
           resetButtonLabel={languages[language].resetButtonLabel}
