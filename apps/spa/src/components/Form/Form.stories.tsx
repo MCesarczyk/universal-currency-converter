@@ -1,7 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { ComponentProps } from 'react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Form } from './Form';
 import { languages } from '../../features/languages/data';
 import { LanguageKeys } from '../../features/languages/types';
+import { useCurrentRatesMock } from '../../features/rates/useCurrentRatesMock';
 
 const meta: Meta<typeof Form> = {
   component: Form,
@@ -21,14 +23,24 @@ const meta: Meta<typeof Form> = {
         type: 'text',
       },
     },
+    ratesData: {
+      control: false,
+    },
+    getCurrentRates: {
+      control: false,
+    },
   },
 };
 export default meta;
 
-type Story = StoryObj<typeof Form>;
-export const _Form: Story = {
-  args: {
-    languages: languages,
-    language: LanguageKeys.EN,
-  },
+const Template: StoryFn<ComponentProps<typeof Form>> = (args) => {
+  const { getCurrentRates, ratesData } = useCurrentRatesMock();
+
+  return <Form {...{ ...args, ratesData, getCurrentRates }} />;
+};
+
+export const _Form = Template.bind({});
+_Form.args = {
+  languages: languages,
+  language: LanguageKeys.EN,
 };

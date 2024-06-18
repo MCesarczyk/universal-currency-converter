@@ -22,8 +22,6 @@ export const useCurrentRatesMock = () => {
 
       return { success: false };
     }
-
-    return ratesData;
   }
 
   return { getCurrentRates, ratesData };

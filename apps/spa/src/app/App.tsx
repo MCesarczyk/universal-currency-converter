@@ -7,6 +7,7 @@ import { languages } from '../features/languages/data';
 import { LanguageKeys } from '../features/languages/types';
 import { clearCacheData } from '../utils/clearCacheData';
 import { useLocalStorageState } from '../utils/useLocalStorageState';
+import { useCurrentRates } from '../features/rates/useCurrentRates';
 
 export const App = () => {
   const [language, setLanguage] = useLocalStorageState('language', 'EN');
@@ -17,6 +18,8 @@ export const App = () => {
     clearCacheData();
   }, []);
 
+  const { getCurrentRates, ratesData } = useCurrentRates();
+
   return (
     <Theme>
       <Wrapper>
@@ -26,7 +29,12 @@ export const App = () => {
           setLanguage={setLanguage}
         />
         <Wrapper>
-          <Form languages={languages} language={language as LanguageKeys} />
+          <Form
+            languages={languages}
+            language={language as LanguageKeys}
+            ratesData={ratesData}
+            getCurrentRates={getCurrentRates}
+          />
         </Wrapper>
       </Wrapper>
     </Theme>

@@ -10,18 +10,24 @@ import {
   Select,
   TextField,
 } from '@ui';
-import { useCurrentRatesMock } from '../../features/rates/useCurrentRatesMock';
 import { useLocalStorageState } from '../../utils/useLocalStorageState';
 import { labelsEnglish, labelsPolish } from '../../features/currencies/labels';
 import { LanguageKeys, Languages } from '../../features/languages/types';
-import { RateDto } from '../../features/rates/types';
+import { RateDto, RatesData } from '../../features/rates/types';
 
 interface FormProps {
   languages: Languages;
   language: LanguageKeys;
+  ratesData: RatesData;
+  getCurrentRates: (currencyBase: string) => void;
 }
 
-export const Form = ({ languages, language }: FormProps) => {
+export const Form = ({
+  languages,
+  language,
+  ratesData,
+  getCurrentRates,
+}: FormProps) => {
   const CURRENT_CURRENCY_DEFAULT = 'EUR';
   const TARGET_CURRENCY_DEFAULT = 'PLN';
   const LOADING_DELAY = 500;
@@ -40,7 +46,7 @@ export const Form = ({ languages, language }: FormProps) => {
 
   const [result, setResult] = useState<[string, string, string] | undefined>();
 
-  const { getCurrentRates, ratesData } = useCurrentRatesMock();
+  // const { getCurrentRates, ratesData } = useCurrentRatesMock();
 
   useEffect(() => {
     getCurrentRates(currentCurrency);
