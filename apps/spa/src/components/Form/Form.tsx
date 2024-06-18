@@ -10,7 +10,7 @@ import {
   Select,
   TextField,
 } from '@ui';
-import { useCurrentRates } from '../../features/rates/useCurrentRates';
+import { useCurrentRatesMock } from '../../features/rates/useCurrentRatesMock';
 import { useLocalStorageState } from '../../utils/useLocalStorageState';
 import { labelsEnglish, labelsPolish } from '../../features/currencies/labels';
 import { LanguageKeys, Languages } from '../../features/languages/types';
@@ -27,17 +27,24 @@ export const Form = ({ languages, language }: FormProps) => {
   const LOADING_DELAY = 500;
 
   const [newAmount, setNewAmount] = useState<number | undefined>();
+
   const [currentCurrency, setCurrentCurrency] = useLocalStorageState(
     'currentCurrency',
     CURRENT_CURRENCY_DEFAULT
   );
+
   const [targetCurrency, setTargetCurrency] = useLocalStorageState(
     'targetCurrency',
     TARGET_CURRENCY_DEFAULT
   );
+
   const [result, setResult] = useState<[string, string, string] | undefined>();
 
-  const { getCurrentRates, ratesData } = useCurrentRates();
+  const { getCurrentRates, ratesData } = useCurrentRatesMock();
+
+  useEffect(() => {
+    getCurrentRates(currentCurrency);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const date = ratesData.rates?.meta.last_updated_at;
   const rates = ratesData.rates?.data;
@@ -101,7 +108,7 @@ export const Form = ({ languages, language }: FormProps) => {
 
   useEffect(() => {
     calculateResult();
-  }, [rates, currentCurrency, targetCurrency]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [newAmount, rates, currentCurrency, targetCurrency]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const exchangeMoney = () => {
     getCurrentRates(currentCurrency);
@@ -146,17 +153,14 @@ export const Form = ({ languages, language }: FormProps) => {
             {!currenciesLabels ? (
               <option>{languages[language].loadingMessage}</option>
             ) : (
-              Object.keys(currenciesLabels).map((key, value) => (
-                <option key={key} value={key}>
-                  {key}
-                  {' - '}
-                  {
-                    Object.values(currenciesLabels)[
-                      Object.keys(currenciesLabels).indexOf(key)
-                    ]
-                  }
-                </option>
-              ))
+              rates &&
+              Object.entries(currenciesLabels)
+                .filter((entry) => Object.keys(rates).includes(entry[0]))
+                .map(([key, value]) => (
+                  <option key={key} value={key}>
+                    {`${key} - ${value}`}
+                  </option>
+                ))
             )}
           </Select>
         </ContentWrapper>
@@ -176,16 +180,12 @@ export const Form = ({ languages, language }: FormProps) => {
             >
               {filteredRates &&
                 filteredRates.map(({ code, value }) => (
-                  <option key={code} value={value}>
-                    {(1 / value).toFixed(4)}
-                    {' - '}
-                    {code}
-                    {' - '}
-                    {
+                  <option key={code} value={code}>
+                    {`${(1 / value).toFixed(4)} - ${code} - ${
                       Object.values(currenciesLabels)[
                         Object.keys(currenciesLabels).indexOf(code)
                       ]
-                    }
+                    }`}
                   </option>
                 ))}
             </Select>
