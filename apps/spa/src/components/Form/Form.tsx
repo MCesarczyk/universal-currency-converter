@@ -44,9 +44,9 @@ export const Form = ({
     TARGET_CURRENCY_DEFAULT
   );
 
-  const [result, setResult] = useState<[string, string, string] | undefined>();
+  const [result, setResult] = useState<string | undefined>();
 
-  // const { getCurrentRates, ratesData } = useCurrentRatesMock();
+  const [shouldInputReset, setShouldInputReset] = useState(false);
 
   useEffect(() => {
     getCurrentRates(currentCurrency);
@@ -107,36 +107,47 @@ export const Form = ({
 
     setResult(
       currentRate && newAmount > 0
-        ? [(newAmount / currentRate).toFixed(2), ' ', targetCurrency]
+        ? `${(newAmount / currentRate).toFixed(2)} ${targetCurrency}`
         : undefined
     );
   };
 
-  useEffect(() => {
-    calculateResult();
-  }, [newAmount, rates, currentCurrency, targetCurrency]); // eslint-disable-line react-hooks/exhaustive-deps
+  // const shouldInputReset = !newAmount && !result;
 
-  const exchangeMoney = () => {
-    getCurrentRates(currentCurrency);
-  };
+  useEffect(() => {
+    if (!newAmount || shouldInputReset) return;
+
+    calculateResult();
+  }, [newAmount, shouldInputReset, rates, currentCurrency, targetCurrency]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (shouldInputReset) {
+      setResult(undefined);
+    }
+  }, [shouldInputReset]);
 
   useEffect(() => {
     setTimeout(() => {
-      exchangeMoney();
+      getCurrentRates(currentCurrency);
     }, LOADING_DELAY);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newAmount, currentCurrency, targetCurrency, newAmount]);
+  }, [currentCurrency]);
+
+  useEffect(() => {
+    if (shouldInputReset) {
+      setNewAmount(undefined);
+      setResult(undefined);
+      setCurrentCurrency(CURRENT_CURRENCY_DEFAULT);
+      setTargetCurrency(TARGET_CURRENCY_DEFAULT);
+      setShouldInputReset(false);
+    }
+  }, [shouldInputReset]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onFormSubmit = (event: FormEvent) => {
     event.preventDefault();
   };
 
-  const onFormReset = (event: FormEvent) => {
-    event.preventDefault();
-
-    setNewAmount(undefined);
-    setResult(undefined);
-  };
+  const onFormReset = () => setShouldInputReset(true);
 
   return (
     <StyledForm onSubmit={onFormSubmit} onReset={onFormReset}>
@@ -144,6 +155,7 @@ export const Form = ({
         <ContentWrapper>
           <DebouncedInput
             onChange={(value) => setNewAmount(Number(value))}
+            shouldReset={shouldInputReset}
             delay={LOADING_DELAY}
             placeholder={languages[language].inputPlaceholder + currentCurrency}
             type="number"
@@ -207,7 +219,8 @@ export const Form = ({
         <FormButtons
           mainButtonLabel={languages[language].mainButtonLabel}
           resetButtonLabel={languages[language].resetButtonLabel}
-          onButtonClick={switchValues}
+          onMainButtonClick={switchValues}
+          onResetButtonClick={onFormReset}
         />
       </Fieldset>
     </StyledForm>

@@ -3,12 +3,14 @@ import styled from 'styled-components';
 
 interface DebouncedInputProps {
   onChange: (value: string) => void;
+  shouldReset: boolean;
   delay?: number;
   placeholder?: string;
 }
 
 export const DebouncedInput = ({
   onChange,
+  shouldReset,
   delay = 500,
   placeholder,
 }: ComponentProps<typeof Input> & DebouncedInputProps) => {
@@ -18,6 +20,13 @@ export const DebouncedInput = ({
   useEffect(() => {
     onChange(debouncedInputValue);
   }, [debouncedInputValue, onChange]);
+
+  useEffect(() => {
+    if (shouldReset) {
+      setInputValue('');
+      setDebouncedInputValue('');
+    }
+  }, [shouldReset]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
