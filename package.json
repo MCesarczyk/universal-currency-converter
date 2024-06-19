@@ -17,12 +17,8 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "predeploy": "pnpm nx build spa --prod --base=/universal-currency-converter/",
+    "deploy": "gh-pages -d dist/apps/spa"
   },
   "eslintConfig": {
     "extends": [
