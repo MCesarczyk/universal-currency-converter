@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {
   Annotation,
@@ -10,10 +10,11 @@ import {
   Select,
   TextField,
 } from '@ui';
-import { useLocalStorageState } from '../../utils/useLocalStorageState';
 import { labelsEnglish, labelsPolish } from '../../features/currencies/labels';
 import { LanguageKeys, Languages } from '../../features/languages/types';
 import { RateDto, RatesData } from '../../features/rates/types';
+import { useResult } from './useResult';
+import { useCurrency } from './useCurrency';
 
 interface FormProps {
   languages: Languages;
@@ -28,29 +29,9 @@ export const Form = ({
   ratesData,
   getCurrentRates,
 }: FormProps) => {
-  const CURRENT_CURRENCY_DEFAULT = 'EUR';
-  const TARGET_CURRENCY_DEFAULT = 'PLN';
-  const LOADING_DELAY = 500;
-
   const [newAmount, setNewAmount] = useState<number | undefined>();
 
-  const [currentCurrency, setCurrentCurrency] = useLocalStorageState(
-    'currentCurrency',
-    CURRENT_CURRENCY_DEFAULT
-  );
-
-  const [targetCurrency, setTargetCurrency] = useLocalStorageState(
-    'targetCurrency',
-    TARGET_CURRENCY_DEFAULT
-  );
-
-  const [result, setResult] = useState<string | undefined>();
-
-  const [shouldInputReset, setShouldInputReset] = useState(false);
-
-  useEffect(() => {
-    getCurrentRates(currentCurrency);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const [shouldFormReset, setShouldFormReset] = useState(false);
 
   const date = ratesData.rates?.meta.last_updated_at;
   const rates = ratesData.rates?.data;
@@ -59,95 +40,46 @@ export const Form = ({
 
   const currenciesLabels = language === 'PL' ? labelsPolish : labelsEnglish;
 
-  const onCurrentCurrencyChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setCurrentCurrency(event.target.value);
-  };
+  const {
+    currentCurrency,
+    targetCurrency,
+    onCurrentCurrencyChange,
+    onTargetCurrencyChange,
+    switchValues,
+    resetCurrencies,
+  } = useCurrency();
 
-  const onTargetCurrencyChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setTargetCurrency(event.target.value);
-  };
-
-  const switchValues = () => {
-    const oldCurrent = currentCurrency;
-    const oldTarget = targetCurrency;
-
-    setCurrentCurrency(oldTarget);
-    setTargetCurrency(oldCurrent);
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const filteredRates: RateDto[] = rates
     ? Object.values(rates).filter((rate) =>
         Object.keys(currenciesLabels).includes(rate.code)
       )
     : [];
 
-  const getExchangeRate = () => {
-    if (filteredRates) {
-      const currentRate = filteredRates.find(
-        ({ code }) => code === currentCurrency
-      );
-      const targetRate = filteredRates.find(
-        ({ code }) => code === targetCurrency
-      );
-
-      if (currentRate && targetRate) {
-        return currentRate.value / targetRate.value;
-      }
-    }
-  };
-
-  const currentRate = getExchangeRate();
-
-  const calculateResult = () => {
-    if (!currentRate || !newAmount) {
-      setResult(undefined);
-      return;
-    }
-
-    setResult(
-      currentRate && newAmount > 0
-        ? `${(newAmount / currentRate).toFixed(2)} ${targetCurrency}`
-        : undefined
-    );
-  };
-
-  // const shouldInputReset = !newAmount && !result;
+  const { result, resetResult } = useResult(
+    filteredRates,
+    newAmount,
+    currentCurrency,
+    targetCurrency
+  );
 
   useEffect(() => {
-    if (!newAmount || shouldInputReset) return;
-
-    calculateResult();
-  }, [newAmount, shouldInputReset, rates, currentCurrency, targetCurrency]); // eslint-disable-line react-hooks/exhaustive-deps
+    getCurrentRates(currentCurrency);
+  }, [currentCurrency]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (shouldInputReset) {
-      setResult(undefined);
-    }
-  }, [shouldInputReset]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      getCurrentRates(currentCurrency);
-    }, LOADING_DELAY);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentCurrency]);
-
-  useEffect(() => {
-    if (shouldInputReset) {
+    if (shouldFormReset) {
       setNewAmount(undefined);
-      setResult(undefined);
-      setCurrentCurrency(CURRENT_CURRENCY_DEFAULT);
-      setTargetCurrency(TARGET_CURRENCY_DEFAULT);
-      setShouldInputReset(false);
+      resetCurrencies();
+      resetResult();
+      setShouldFormReset(false);
     }
-  }, [shouldInputReset]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [shouldFormReset]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onFormSubmit = (event: FormEvent) => {
     event.preventDefault();
   };
 
-  const onFormReset = () => setShouldInputReset(true);
+  const onFormReset = () => setShouldFormReset(true);
 
   return (
     <StyledForm onSubmit={onFormSubmit} onReset={onFormReset}>
@@ -155,8 +87,8 @@ export const Form = ({
         <ContentWrapper>
           <DebouncedInput
             onChange={(value) => setNewAmount(Number(value))}
-            shouldReset={shouldInputReset}
-            delay={LOADING_DELAY}
+            shouldReset={shouldFormReset}
+            delay={500}
             placeholder={languages[language].inputPlaceholder + currentCurrency}
             type="number"
             min="0.01"
