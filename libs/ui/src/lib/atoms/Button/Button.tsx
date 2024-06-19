@@ -8,6 +8,7 @@ export const Button = styled.button<{reset?: boolean}>`
     border-radius: 20px;
     padding: 8px 16px;
     margin: 5px 10px;
+    width: 100%;
 
     @media (max-width: ${({ theme }) => theme.breakpoint.xs}) {
         width: 100%;
