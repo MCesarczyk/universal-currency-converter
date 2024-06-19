@@ -93,6 +93,7 @@ body {
     border-radius: 20px;
     padding: 8px 16px;
     margin: 5px 10px;
+    width: 100%;
 
     @media (max-width: ${({theme:e})=>e.breakpoint.xs}) {
         width: 100%;
