@@ -1,17 +1,17 @@
 I've decided to refactor this app completely, removed obsolete "Calculate" button, replacing it with one, triggering useful "Switch currencies" feature.\
 It was possible thanks to debounce functionality, so now the result is calculating "on the fly", immediately after user stop writing down letters into form 😎
 
-![picking currencies](src/assets/images/picking_currencies.gif)
+![picking currencies](assets/picking_currencies.gif)
 
 Using this converter on everyday basis, inability of quick currencies switch bothered me the most 😫 ... <br/>
 so here it is! 🎉😀
 
-![switching currencies](src/assets/images/switching_currencies.gif)
+![switching currencies](assets/switching_currencies.gif)
 
 Obviously, language switcher is also onboard, <br/>
 now it got look refreshment with english and polish language flags on buttons. 👩🏿👦🏻🧔🏾👩👳🏿‍♂️
 
-![changing UI language](src/assets/images/changing_language.gif)
+![changing UI language](assets/changing_language.gif)
 ***
 # Getting Started with Create React App
 
